@@ -1,0 +1,3 @@
+recursive-include ez_setup *
+include MANIFEST.in setupegg.py
+recursive-include rl build.sh readline-*.tar.gz readline*-0*
