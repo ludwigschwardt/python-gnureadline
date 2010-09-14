@@ -5,10 +5,6 @@ import os.path
 import sys
 import distutils
 
-# Ensure that the correct version of setuptools is installed
-import ez_setup
-ez_setup.use_setuptools()
-
 from setuptools import setup, Extension
 
 
@@ -67,9 +63,9 @@ for s in sys.argv[1:]:
 # Build readline first, if it is not there and we are building the module
 if building and not os.path.exists('readline/libreadline.a'):
     if verbose:
-        print "\n============ Building the readline library ============\n"
+        print("\n============ Building the readline library ============\n")
         os.system('cd rl && /bin/bash ./build.sh')
-        print "\n============ Building the readline extension module ============\n"
+        print("\n============ Building the readline extension module ============\n")
     else:
         os.system('cd rl && /bin/bash ./build.sh > /dev/null 2>&1')        
     # Add symlink that simplifies include and link paths to real library
