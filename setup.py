@@ -80,7 +80,7 @@ setup(
     classifiers=CLASSIFIERS,
     maintainer="Ludwig Schwardt",
     maintainer_email="ludwig.schwardt@gmail.com",
-    url="http://pypi.python.org/pypi/readline",
+    url="http://github.com/ludwigschwardt/python-readline",
     license="GNU GPL",
     platforms=['MacOS'],
     ext_modules=[
