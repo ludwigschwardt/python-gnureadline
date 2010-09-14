@@ -1,2 +1,2 @@
 include README.rst NEWS.rst MANIFEST.in setupegg.py
-recursive-include rl build.sh readline-*.tar.gz readline*-0*
+recursive-include Modules rl build.sh readline-*.tar.gz readline*-0*

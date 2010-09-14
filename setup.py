@@ -24,6 +24,7 @@ License :: OSI Approved :: GNU General Public License (GPL)
 Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
+Programming Language :: Python :: 3
 Topic :: Software Development :: Libraries :: Python Modules
 """.splitlines()))
 
@@ -83,9 +84,12 @@ setup(
     url="http://github.com/ludwigschwardt/python-readline",
     license="GNU GPL",
     platforms=['MacOS'],
+    include_package_data=True,
     ext_modules=[
         Extension(name="readline",
-                  sources=["Modules/readline.c"],
+                  sources=[
+                      "Modules/%s.x/readline.c" % sys.version_info[0]
+                  ],
                   include_dirs=['.'],
                   define_macros=DEFINE_MACROS,
                   extra_compile_args=['-Wno-strict-prototypes'] + UNIVERSAL.split(),
