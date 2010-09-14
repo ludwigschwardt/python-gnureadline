@@ -11,7 +11,7 @@ ez_setup.use_setuptools()
 
 from setuptools import setup, Extension
 
-VERSION = '2.6.4'
+VERSION = '2.6.5' + '.dev'
 DESCRIPTION = "GNU readline support for Python on platforms without readline."
 LONG_DESCRIPTION = """
 Some platforms, such as Mac OS X, do not ship with GNU readline installed. The
