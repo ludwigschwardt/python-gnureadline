@@ -6,5 +6,5 @@ News
 
 *Release date: ??-2010*
 
-- 
+- Update Python readline.c from release27-maint (r83672)
 
