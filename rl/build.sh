@@ -1,4 +1,5 @@
 #! /bin/bash
+set -e
 
 # If we are on Mac OS X, look for the latest SDK and do a universal build
 if [ `uname` == "Darwin" ]; then
@@ -26,12 +27,10 @@ if [ `uname` == "Darwin" ]; then
 fi
 
 rm -rf readline-lib
-tar xzvf readline-6.0.tar.gz
-mv readline-6.0 readline-lib
+tar xzvf readline-6.1.tar.gz
+mv readline-6.1 readline-lib
 cd readline-lib
-patch -p0 < ../readline60-001
-patch -p0 < ../readline60-002
-patch -p0 < ../readline60-003
-patch -p0 < ../readline60-004
+patch -p0 < ../readline61-001
+patch -p0 < ../readline61-002
 ./configure CPPFLAGS='-DNEED_EXTERN_PC -fPIC'
 make

@@ -6,6 +6,7 @@ News
 
 *Release date: ??-2010*
 
-- Python 3 support (#2)
+- #4: Update to readline-6.1
+- #2: Python 3 support
 - Update Python readline.c from release27-maint (r83672)
 
