@@ -28,6 +28,6 @@ The latest development version is available from the `GitHub repository`_.
 
 .. _GNU readline: http://tiswww.case.edu/php/chet/readline/rltop.html
 .. _editline: http://www.thrysoee.dk/editline/
-.. _ActivePython: http://www.activestate.com/activepython
+.. _ActivePython: http://community.activestate.com/faq/why-doesnt-activepython-u
 .. _pyreadline: http://pypi.python.org/pypi/pyreadline
 .. _GitHub repository: http://github.com/ludwigschwardt/python-readline
