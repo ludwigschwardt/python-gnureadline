@@ -1,5 +1,7 @@
 *.pyc
 *.egg-info
 .tox
+build
 dist
 readline-lib
+readline
