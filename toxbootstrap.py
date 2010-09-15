@@ -103,16 +103,26 @@ def cmdline(argv=None):
     assert has_script('toxinstall', 'python')
     assert has_script('toxinstall', 'pip')
 
+    pip = get_script_path('toxinstall', 'pip')
+
     # install/upgrade tox itself
     if any([
         not has_script('toxinstall', 'tox'),
         get_tox_version('toxinstall') != pypi_get_latest_version('tox')]):
-        run('{0} install --upgrade --download-cache=pip-cache tox'.format(
-                get_script_path('toxinstall', 'pip')))
+        run('{0} install --upgrade --download-cache=pip-cache tox'.format(pip))
 
     assert has_script('toxinstall', 'tox')
     tox_script = path.abspath(get_script_path('toxinstall', 'tox'))
     logging.info('tox is already installed at %s', tox_script)
+
+    virtualenv = get_script_path('toxinstall', 'virtualenv')
+
+    # XXX: virtualenv 1.5 is broken; replace it
+    if crun('{0} --version'.format(virtualenv)).strip() == '1.5':
+        logging.info(
+            'Replacing the unstable virtualenv-1.5 with the latest stable')
+        run('{0} uninstall -y virtualenv'.format(pip))
+        run('{0} install virtualenv!=1.5'.format(pip))
 
     # Now run the locally-installed tox
     os.chdir('..')
