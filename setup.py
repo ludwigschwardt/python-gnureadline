@@ -12,42 +12,45 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.rst')).read()
 
-
-VERSION = '2.6.5' + '.dev'
-DESCRIPTION = "GNU readline support for Python on platforms without readline."
+VERSION = '6.1.1' + '.dev'
+DESCRIPTION = 'The standard Python readline extension statically linked against the GNU readline library.'
 LONG_DESCRIPTION = README + '\n\n' + NEWS
-CLASSIFIERS = filter(None, map(str.strip,
-"""                 
-Environment :: Console
-Intended Audience :: Developers
-License :: OSI Approved :: GNU General Public License (GPL)
-Natural Language :: English
-Operating System :: MacOS :: MacOS X
-Programming Language :: Python
-Programming Language :: Python :: 3
-Topic :: Software Development :: Libraries :: Python Modules
-""".splitlines()))
+CLASSIFIERS = [
+    'Environment :: Console',
+    'Intended Audience :: Developers',
+    'Intended Audience :: End Users/Desktop',
+    'License :: OSI Approved :: GNU General Public License (GPL)',
+    'Operating System :: MacOS :: MacOS X',
+    'Operating System :: POSIX',
+    'Programming Language :: C',
+    'Programming Language :: Python :: 2',
+    'Programming Language :: Python :: 3',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+]
 
 # If we are on Mac OS 10.5 or later, attempt a universal binary, which is the way
 # the original system version of readline.so was compiled. Set up flags here.
-UNIVERSAL = ''
 if distutils.util.get_platform().find('macosx-10.5') == 0:
     UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX10.5.sdk ' + \
                 '-arch i386 -arch ppc -arch x86_64 -arch ppc64'
 elif distutils.util.get_platform().find('macosx-10.6') == 0:
-    # Snow Leopard has only 3 architectures
+    # Snow Leopard only has 3 architectures
     UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX10.6.sdk ' + \
                 '-arch i386 -arch ppc -arch x86_64'
+else:
+    UNIVERSAL = ''
 
 # Since we have the latest readline (post 4.2), enable all readline functionality
 # These macros can be found in pyconfig.h.in in the main directory of the Python tarball
-DEFINE_MACROS = [('HAVE_RL_CALLBACK', None),
-                 ('HAVE_RL_CATCH_SIGNAL', None),
-                 ('HAVE_RL_COMPLETION_APPEND_CHARACTER', None),
-                 ('HAVE_RL_COMPLETION_DISPLAY_MATCHES_HOOK', None),
-                 ('HAVE_RL_COMPLETION_MATCHES', None),
-                 ('HAVE_RL_COMPLETION_SUPPRESS_APPEND', None),
-                 ('HAVE_RL_PRE_INPUT_HOOK', None)]
+DEFINE_MACROS = [
+    ('HAVE_RL_CALLBACK', None),
+    ('HAVE_RL_CATCH_SIGNAL', None),
+    ('HAVE_RL_COMPLETION_APPEND_CHARACTER', None),
+    ('HAVE_RL_COMPLETION_DISPLAY_MATCHES_HOOK', None),
+    ('HAVE_RL_COMPLETION_MATCHES', None),
+    ('HAVE_RL_COMPLETION_SUPPRESS_APPEND', None),
+    ('HAVE_RL_PRE_INPUT_HOOK', None),
+]
 
 # Check if any of the distutils commands involves building the module,
 # and check for quiet vs. verbose option
@@ -83,13 +86,11 @@ setup(
     maintainer_email="ludwig.schwardt@gmail.com",
     url="http://github.com/ludwigschwardt/python-readline",
     license="GNU GPL",
-    platforms=['MacOS'],
+    platforms=['MacOS X', 'Posix'],
     include_package_data=True,
     ext_modules=[
         Extension(name="readline",
-                  sources=[
-                      "Modules/%s.x/readline.c" % sys.version_info[0]
-                  ],
+                  sources=["Modules/%s.x/readline.c" % (sys.version_info[0],)],
                   include_dirs=['.'],
                   define_macros=DEFINE_MACROS,
                   extra_compile_args=['-Wno-strict-prototypes'] + UNIVERSAL.split(),
