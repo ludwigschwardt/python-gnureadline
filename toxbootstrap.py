@@ -8,7 +8,6 @@ from os import path
 import logging
 
 from subprocess import Popen, PIPE, check_call, CalledProcessError
-import pkg_resources
 
 PY3 = sys.version_info[0] == 3
 
@@ -81,12 +80,21 @@ def get_tox_version(venv):
     return crun('{0} -s -c "{1}"'.format(py, s))
 
 
+def parse_simple_version(v):
+    """A simplified version of pkg_resources.parse_version
+
+    This method can only parse simple versions like the ones with a set of
+    numbers separated by dots (eg: 1.2.3)
+    """
+    return [int(c) for c in v.split('.')]
+
+
 def pypi_get_latest_version(pkgname):
     """Return the latest version of package from PyPI"""
     pypi = xmlrpclib.ServerProxy('http://pypi.python.org/pypi')
     versions = pypi.package_releases('tox')
     assert versions
-    versions.sort(key=pkg_resources.parse_version, reverse=True)
+    versions.sort(key=parse_simple_version, reverse=True)
     return versions[0]
 
 
