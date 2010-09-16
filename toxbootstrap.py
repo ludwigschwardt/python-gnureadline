@@ -5,11 +5,19 @@
 import sys
 import os
 from os import path
-from urllib import urlretrieve
 import logging
-import xmlrpclib
+
 from subprocess import Popen, PIPE, check_call, CalledProcessError
 import pkg_resources
+
+PY3 = sys.version_info[0] == 3
+
+if PY3:
+    from urllib.request import urlretrieve
+    import xmlrpc.client as xmlrpclib
+else:
+    from urllib import urlretrieve
+    import xmlrpclib
 
 logging.basicConfig(level=logging.INFO)
 
@@ -89,7 +97,7 @@ def cmdline(argv=None):
     os.chdir('.tox')
 
     # create virtual environment
-    if not path.isdir('toxinstall'):
+    if not path.isdir('toxinstall') or not has_script('toxinstall', 'python'):
         # get virtualenv.py
         if not path.isfile('virtualenv.py'):
             wget(VIRTUALENVPY_URL)
@@ -100,8 +108,8 @@ def cmdline(argv=None):
         # this should be to first look for tox in the global scripts/ directory
         run('python virtualenv.py --no-site-packages --distribute toxinstall')
 
-    assert has_script('toxinstall', 'python')
-    assert has_script('toxinstall', 'pip')
+    assert has_script('toxinstall', 'python'), 'no python script'
+    assert has_script('toxinstall', 'pip'), 'no pip script'
 
     pip = get_script_path('toxinstall', 'pip')
 
