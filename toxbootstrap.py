@@ -68,7 +68,7 @@ def get_script_path(venv, name):
         p = path.join(venv, 'bin', name)
 
     if not path.exists(p):
-        raise NameError('cannot find a script named "{0}"'.format(name))
+        raise NameError('cannot find a script named "%s"' % (name,))
 
     return p
 
@@ -77,7 +77,7 @@ def get_tox_version(venv):
     """Return the installed version of tox"""
     py = get_script_path(venv, 'python')
     s = 'import tox,sys; sys.stdout.write(str(tox.__version__))'
-    return crun('{0} -s -c "{1}"'.format(py, s))
+    return crun('%s -s -c "%s"' % (py, s))
 
 
 def parse_simple_version(v):
@@ -125,7 +125,7 @@ def cmdline(argv=None):
     if any([
         not has_script('toxinstall', 'tox'),
         get_tox_version('toxinstall') != pypi_get_latest_version('tox')]):
-        run('{0} install --upgrade --download-cache=pip-cache tox'.format(pip))
+        run('%s install --upgrade --download-cache=pip-cache tox' % (pip,))
 
     assert has_script('toxinstall', 'tox')
     tox_script = path.abspath(get_script_path('toxinstall', 'tox'))
@@ -134,17 +134,18 @@ def cmdline(argv=None):
     virtualenv = get_script_path('toxinstall', 'virtualenv')
 
     # XXX: virtualenv 1.5 is broken; replace it
-    if crun('{0} --version'.format(virtualenv)).strip() == '1.5':
+    if crun('%s --version' % (virtualenv,)).strip() == '1.5':
         logging.info(
             'Replacing the unstable virtualenv-1.5 with the latest stable')
-        run('{0} uninstall -y virtualenv'.format(pip))
-        run('{0} install virtualenv!=1.5'.format(pip))
+        run('%s uninstall -y virtualenv' % (pip,))
+        run('%s install virtualenv!=1.5' % (pip,))
 
     # Now run the locally-installed tox
     os.chdir('..')
     try:
         run([tox_script] + (argv or []), shell=False)
-    except CalledProcessError as e:
+    except CalledProcessError:
+        _, e, _ = sys.exc_info()
         logging.error('tox exited with error code %d', e.returncode)
         sys.exit(e.returncode)
 
