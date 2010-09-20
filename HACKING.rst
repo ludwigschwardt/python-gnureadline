@@ -5,6 +5,10 @@ Release HOWTO
 
    $ make test
 
-2. Upload sdist to PyPI:
+2. Upload package metadata and source distribution to PyPI::
 
-   $ python setup.py sdist register upload
+   $ python setup.py sdist register upload --sign
+
+3. Upload binary egg to PyPI (do this on each desired architecture)::
+
+   $ python setup.py bdist_egg upload --sign
