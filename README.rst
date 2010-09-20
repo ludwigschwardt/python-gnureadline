@@ -1,3 +1,6 @@
+Stand-alone readline module
+===========================
+
 Some platforms, such as Mac OS X, do not ship with `GNU readline`_ installed.
 The readline extension module in the standard library of Mac "system" Python
 uses NetBSD's `editline`_ (libedit) library instead, which is a readline
