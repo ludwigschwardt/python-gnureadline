@@ -8,6 +8,9 @@ import distutils
 from setuptools import setup, Extension
 
 
+if sys.platform == 'win32':
+    sys.exit('error: this module is not meant to work on Windows')
+
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.rst')).read()
