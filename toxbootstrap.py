@@ -77,7 +77,10 @@ def get_tox_version(venv):
     """Return the installed version of tox"""
     py = get_script_path(venv, 'python')
     s = 'import tox,sys; sys.stdout.write(str(tox.__version__))'
-    return crun('%s -s -c "%s"' % (py, s))
+    if sys.version_info[:2] >= (2, 6):
+        return crun('%s -s -c "%s"' % (py, s))
+    else:
+        return crun('%s -c "%s"' % (py, s))
 
 
 def parse_simple_version(v):
@@ -114,7 +117,7 @@ def cmdline(argv=None):
         # XXX: we use --no-site-packages because: if tox is installed in global
         # site-packages, then pip will not install it locally. ideal fix for
         # this should be to first look for tox in the global scripts/ directory
-        run('python virtualenv.py --no-site-packages --distribute toxinstall')
+        run('%s virtualenv.py --no-site-packages --distribute toxinstall' % sys.executable)
 
     assert has_script('toxinstall', 'python'), 'no python script'
     assert has_script('toxinstall', 'pip'), 'no pip script'
