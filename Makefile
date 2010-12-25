@@ -1,3 +1,7 @@
 # Test across all Python versions (see tox.ini)
 test:
-	python toxbootstrap.py
+	curl "https://pytox.googlecode.com/hg/toxbootstrap.py" > /tmp/toxbootstrap.py
+	python /tmp/toxbootstrap.py
+
+.PHONY: test
+
