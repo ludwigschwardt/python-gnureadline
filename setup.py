@@ -86,7 +86,7 @@ setup(
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
     maintainer="Ludwig Schwardt; Sridhar Ratnakumar",
-    maintainer_email="ludwig.schwardt@gmail.com; readline@srid.name",
+    maintainer_email="ludwig.schwardt@gmail.com; github@srid.name",
     url="http://github.com/ludwigschwardt/python-readline",
     license="GNU GPL",
     platforms=['MacOS X', 'Posix'],
