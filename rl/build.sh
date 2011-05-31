@@ -4,26 +4,25 @@ set -e
 # If we are on Mac OS X, look for the latest SDK and do a universal build
 if [ `uname` == "Darwin" ]; then
   LATEST_SDK=''
-  for f in /Developer/SDKs/*; do
-    LATEST_SDK=$f
+  for sdk_dir in /Developer/SDKs/*; do
+    LATEST_SDK=$sdk_dir
   done
   if [[ $LATEST_SDK == /Developer/SDKs/MacOSX10.4u.sdk ]]; then
-    # Check if we have an old gcc on Mac OS 10.4 (from XCode < 2.4) which did not support x86_64
-    gcc -arch x86_64 -v
-    if [ $? -eq 0 ]; then
-      export CFLAGS='-isysroot '${LATEST_SDK}' -arch i386 -arch ppc -arch x86_64 -arch ppc64'
-      export LDFLAGS='-isysroot '${LATEST_SDK}' -arch i386 -arch ppc -arch x86_64 -arch ppc64'
-    else
-      export CFLAGS='-isysroot '${LATEST_SDK}' -arch i386 -arch ppc -arch ppc64'
-      export LDFLAGS='-isysroot '${LATEST_SDK}' -arch i386 -arch ppc -arch ppc64'
-    fi
-  elif [[ $LATEST_SDK == /Developer/SDKs/MacOSX10.5.sdk ]]; then
-    export CFLAGS='-isysroot '${LATEST_SDK}' -arch i386 -arch ppc -arch x86_64 -arch ppc64'
-    export LDFLAGS='-syslibroot,'${LATEST_SDK}' -arch i386 -arch ppc -arch x86_64 -arch ppc64'
-  elif [[ $LATEST_SDK == /Developer/SDKs/MacOSX10.6.sdk ]]; then
-    export CFLAGS='-isysroot '${LATEST_SDK}' -arch i386 -arch ppc -arch x86_64'
-    export LDFLAGS='-syslibroot,'${LATEST_SDK}' -arch i386 -arch ppc -arch x86_64'
+    CFLAGS=''
+    LDFLAGS=''
+  elif [[ $LATEST_SDK ]]; then
+    CFLAGS='-isysroot '${LATEST_SDK}
+    LDFLAGS='-syslibroot,'${LATEST_SDK}
   fi
+  # Add all architectures that we find support for in gcc
+  for architecture in i386 x86_64 ppc ppc64; do 
+    if (gcc -v -arch ${architecture}); then
+      CFLAGS+=' -arch '${architecture}
+      LDFLAGS+=' -arch '${architecture}
+    fi
+  done
+  export CFLAGS
+  export LDFLAGS
 fi
 
 rm -rf readline-lib
