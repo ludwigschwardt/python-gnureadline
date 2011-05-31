@@ -27,10 +27,9 @@ if [ `uname` == "Darwin" ]; then
 fi
 
 rm -rf readline-lib
-tar xzvf readline-6.1.tar.gz
-mv readline-6.1 readline-lib
+tar xzvf readline-6.2.tar.gz
+mv readline-6.2 readline-lib
 cd readline-lib
-patch -p0 < ../readline61-001
-patch -p0 < ../readline61-002
+patch -p0 < ../readline62-001
 ./configure CPPFLAGS='-DNEED_EXTERN_PC -fPIC'
 make
