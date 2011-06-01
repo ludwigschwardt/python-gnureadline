@@ -7,6 +7,7 @@ if [ `uname` == "Darwin" ]; then
   for sdk_dir in /Developer/SDKs/*; do
     LATEST_SDK=$sdk_dir
   done
+  # Do not add -isysroot on 10.4, as old systems with XCode < 2.4 do not like it
   if [[ $LATEST_SDK == /Developer/SDKs/MacOSX10.4u.sdk ]]; then
     CFLAGS=''
     LDFLAGS=''
@@ -14,13 +15,19 @@ if [ `uname` == "Darwin" ]; then
     CFLAGS='-isysroot '${LATEST_SDK}
     LDFLAGS='-syslibroot,'${LATEST_SDK}
   fi
-  # Add all architectures that we find support for in gcc
-  for architecture in i386 x86_64 ppc ppc64; do 
-    if (gcc -v -arch ${architecture}); then
-      CFLAGS+=' -arch '${architecture}
-      LDFLAGS+=' -arch '${architecture}
-    fi
-  done
+  # Add all architectures that we find asm support for in gcc
+  if [ -d /usr/libexec/gcc/darwin ]; then
+    archs=''
+    for as_path in /usr/libexec/gcc/darwin/*; do
+      architecture=${as_path##*/}
+      if (gcc -v -arch ${architecture} > /dev/null 2>&1); then
+        CFLAGS+=' -arch '${architecture}
+        LDFLAGS+=' -arch '${architecture}
+        archs+=' '${architecture}
+      fi
+    done
+    echo 'Building readline library with architectures:'${archs}
+  fi
   export CFLAGS
   export LDFLAGS
 fi

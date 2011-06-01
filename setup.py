@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
 import os
-import os.path
 import sys
+import glob
 import distutils
 
 from setuptools import setup, Extension
-
 
 if sys.platform == 'win32':
     sys.exit('error: this module is not meant to work on Windows')
@@ -15,7 +14,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.rst')).read()
 
-VERSION = '6.1.0'
+VERSION = '6.2.0'
 DESCRIPTION = 'The standard Python readline extension statically linked against the GNU readline library.'
 LONG_DESCRIPTION = README + '\n\n' + NEWS
 CLASSIFIERS = [
@@ -33,15 +32,18 @@ CLASSIFIERS = [
 
 # If we are on Mac OS 10.5 or later, attempt a universal binary, which is the way
 # the original system version of readline.so was compiled. Set up flags here.
-if distutils.util.get_platform().find('macosx-10.5') == 0:
-    UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX10.5.sdk ' + \
-                '-arch i386 -arch ppc -arch x86_64 -arch ppc64'
-elif distutils.util.get_platform().find('macosx-10.6') == 0:
-    # Snow Leopard only has 3 architectures
-    UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX10.6.sdk ' + \
-                '-arch i386 -arch ppc -arch x86_64'
-else:
-    UNIVERSAL = ''
+UNIVERSAL = ''
+platform = distutils.util.get_platform()
+if platform.startswith('macosx'):
+    osx_version = platform.split('-')[1]
+    if osx_version > '10.4':
+        UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX' + osx_version + '.sdk'
+        # Autodetect the supported architectures by looking for installed gcc assemblers
+        # This assumes that you are using the standard Apple gcc compiler...
+        archs = [os.path.basename(as_path) for as_path in glob.glob('/usr/libexec/gcc/darwin/*')]
+        print("\nDetected Mac OS X architectures: %s" % (' '.join(archs),))
+        if len(archs) > 0:
+            UNIVERSAL += ' -arch ' + ' -arch '.join(archs)
 
 # Since we have the latest readline (post 4.2), enable all readline functionality
 # These macros can be found in pyconfig.h.in in the main directory of the Python tarball
