@@ -1,6 +1,13 @@
 History
 =======
 
+6.2.0 (2011-06-02)
+------------------
+
+* #5: Removed '-arch ppc' on Mac OS 10.6, as Snow Leopard supports Intel only
+* Updated to build against readline 6.2 (patch-level 1)
+* Get the now-official toxbootstrap.py during 'make test'
+
 6.1.0 (2010-09-20)
 ------------------
 
