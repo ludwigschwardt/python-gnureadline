@@ -36,14 +36,11 @@ UNIVERSAL = ''
 platform = distutils.util.get_platform()
 if platform.startswith('macosx'):
     osx_version = platform.split('-')[1]
-    if osx_version > '10.4':
-        UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX' + osx_version + '.sdk'
-        # Autodetect the supported architectures by looking for installed gcc assemblers
-        # This assumes that you are using the standard Apple gcc compiler...
-        archs = [os.path.basename(as_path) for as_path in glob.glob('/usr/libexec/gcc/darwin/*')]
-        print("\nDetected Mac OS X architectures: %s" % (' '.join(archs),))
-        if len(archs) > 0:
-            UNIVERSAL += ' -arch ' + ' -arch '.join(archs)
+    if osx_version == '10.5':
+        UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX10.5.sdk -arch i386 -arch ppc -arch x86_64 -arch ppc64'
+    elif osx_version > '10.5':
+        # Starting with 10.6 (Snow Leopard), only Intel architecture is supported
+        UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX%s.sdk -arch i386 -arch x86_64' % (osx_version,)
 
 # Since we have the latest readline (post 4.2), enable all readline functionality
 # These macros can be found in pyconfig.h.in in the main directory of the Python tarball
