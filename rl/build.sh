@@ -20,7 +20,7 @@ if [ `uname` == "Darwin" ]; then
   elif [[ $LATEST_SDK == /Developer/SDKs/MacOSX10.5.sdk ]]; then
     export CFLAGS='-isysroot '${LATEST_SDK}' -arch i386 -arch ppc -arch x86_64 -arch ppc64'
     export LDFLAGS='-syslibroot,'${LATEST_SDK}' -arch i386 -arch ppc -arch x86_64 -arch ppc64'
-  elif [[ $LATEST_SDK == /Developer/SDKs/MacOSX10.6.sdk ]]; then
+  else
     # Starting with 10.6 (Snow Leopard), only Intel architecture is supported
     export CFLAGS='-isysroot '${LATEST_SDK}' -arch i386 -arch x86_64'
     export LDFLAGS='-syslibroot,'${LATEST_SDK}' -arch i386 -arch x86_64'
