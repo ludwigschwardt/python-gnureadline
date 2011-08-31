@@ -1,6 +1,14 @@
 History
 =======
 
+6.2.1 (2011-08-31)
+------------------
+
+* #10: Fixed '_emacs_meta_keymap' missing symbol on Mac OS 10.7
+* #7: Fixed SDK version check to work with Mac OS 10.7 and later
+* Uses Python 2.x readline.c from release27-maint branch (r87358)
+* Uses Python 3.x readline.c from release32-maint branch (r88446)
+
 6.2.0 (2011-06-02)
 ------------------
 

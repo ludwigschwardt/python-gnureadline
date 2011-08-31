@@ -64,10 +64,11 @@ static int using_libedit_emulation = 0;
 static const char libedit_version_tag[] = "EditLine wrapper";
 #endif /* __APPLE__ */
 
+#ifdef HAVE_RL_COMPLETION_DISPLAY_MATCHES_HOOK
 static void
 on_completion_display_matches_hook(char **matches,
                                    int num_matches, int max_length);
-
+#endif
 
 /* Exported function to send one line to readline's init file parser */
 
@@ -774,6 +775,7 @@ on_pre_input_hook(void)
 
 /* C function to call the Python completion_display_matches */
 
+#ifdef HAVE_RL_COMPLETION_DISPLAY_MATCHES_HOOK
 static void
 on_completion_display_matches_hook(char **matches,
                                    int num_matches, int max_length)
@@ -815,6 +817,7 @@ on_completion_display_matches_hook(char **matches,
 #endif
 }
 
+#endif
 
 /* C function to call the Python completer. */
 
@@ -886,6 +889,14 @@ setup_readline(void)
         Py_FatalError("not enough memory to save locale");
 #endif
 
+#ifdef __APPLE__
+    /* the libedit readline emulation resets key bindings etc 
+     * when calling rl_initialize.  So call it upfront
+     */
+    if (using_libedit_emulation)
+        rl_initialize();
+#endif /* __APPLE__ */
+
     using_history();
 
     rl_readline_name = "python";
@@ -917,8 +928,13 @@ setup_readline(void)
      * XXX: A bug in the readline-2.2 library causes a memory leak
      * inside this function.  Nothing we can do about it.
      */
-    rl_initialize();
-
+#ifdef __APPLE__
+    if (using_libedit_emulation)
+	rl_read_init_file(NULL);
+    else
+#endif /* __APPLE__ */
+        rl_initialize();
+    
     RESTORE_LOCALE(saved_locale)
 }
 
