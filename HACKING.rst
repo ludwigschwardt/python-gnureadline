@@ -1,15 +1,19 @@
 Release HOWTO
 =============
 
-1. Test on all Python versions::
+1. Prepare for release by updating the changelog in NEWS.rst, bumping the
+   version number in setup.py and doing a commit announcing the release to
+   the GitHub repository.
+
+2. Test on all Python versions::
 
    $ make test
 
-2. Upload package metadata and source distribution to PyPI::
+3. Upload package metadata and source distribution to PyPI::
 
    $ python setup.py sdist register upload --sign
 
-3. Upload binary egg to PyPI directly (do this on each desired architecture)::
+4. Upload binary egg to PyPI directly (do this on each desired architecture)::
 
    $ python setup.py bdist_egg upload --sign
 
