@@ -1,6 +1,12 @@
 History
 =======
 
+6.2.2 (2012-02-24)
+------------------
+
+* #14: Fixed compilation with Xcode 4.3 on Mac OS 10.7
+* Updated to build against readline 6.2 (patch-level 2)
+
 6.2.1 (2011-08-31)
 ------------------
 
