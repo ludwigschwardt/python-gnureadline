@@ -1,0 +1,16 @@
+language: python
+
+python:
+  - 2.5
+  - 2.6
+  - 2.7
+  - 3.2
+
+install:
+  - python setup.py install
+
+before_script:
+  - pip install py
+
+script:
+  - py.test test.py
