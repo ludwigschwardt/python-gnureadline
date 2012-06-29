@@ -4,7 +4,7 @@ set -e
 # If we are on Mac OS X, do a universal build
 if [ `uname` == "Darwin" ]; then
   # On older versions of Mac OS X, look for the latest SDK
-  if [ -d /Developer ]; then
+  if [ -d /Developer/SDKs ]; then
     LATEST_SDK=''
     for sdk_dir in /Developer/SDKs/*; do
       LATEST_SDK=$sdk_dir
