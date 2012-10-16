@@ -154,6 +154,7 @@ write_history_file(PyObject *self, PyObject *args)
 {
     PyObject *filename_obj = Py_None, *filename_bytes;
     char *filename;
+    int err;
     if (!PyArg_ParseTuple(args, "|O:write_history_file", &filename_obj))
         return NULL;
     if (filename_obj != Py_None) {
@@ -164,10 +165,11 @@ write_history_file(PyObject *self, PyObject *args)
         filename_bytes = NULL;
         filename = NULL;
     }
-    errno = write_history(filename);
-    if (!errno && _history_length >= 0)
+    errno = err = write_history(filename);
+    if (!err && _history_length >= 0)
         history_truncate_file(filename, _history_length);
     Py_XDECREF(filename_bytes);
+    errno = err;
     if (errno)
         return PyErr_SetFromErrno(PyExc_IOError);
     Py_RETURN_NONE;
@@ -233,10 +235,9 @@ set_hook(const char *funcname, PyObject **hook_var, PyObject *args)
         Py_XDECREF(tmp);
     }
     else {
-        PyOS_snprintf(buf, sizeof(buf),
-                      "set_%.50s(func): argument not callable",
-                      funcname);
-        PyErr_SetString(PyExc_TypeError, buf);
+        PyErr_Format(PyExc_TypeError,
+                     "set_%.50s(func): argument not callable",
+                     funcname);
         return NULL;
     }
     Py_RETURN_NONE;
@@ -890,7 +891,7 @@ setup_readline(void)
 #endif
 
 #ifdef __APPLE__
-    /* the libedit readline emulation resets key bindings etc 
+    /* the libedit readline emulation resets key bindings etc
      * when calling rl_initialize.  So call it upfront
      */
     if (using_libedit_emulation)
@@ -930,11 +931,11 @@ setup_readline(void)
      */
 #ifdef __APPLE__
     if (using_libedit_emulation)
-	rl_read_init_file(NULL);
+        rl_read_init_file(NULL);
     else
 #endif /* __APPLE__ */
         rl_initialize();
-    
+
     RESTORE_LOCALE(saved_locale)
 }
 
@@ -970,7 +971,7 @@ readline_until_enter_or_signal(char *prompt, int *signal)
     completed_input_string = not_done_reading;
 
     while (completed_input_string == not_done_reading) {
-        int has_input = 0;
+        int has_input = 0, err = 0;
 
         while (!has_input)
         {               struct timeval timeout = {0, 100000}; /* 0.1 seconds */
@@ -984,13 +985,14 @@ readline_until_enter_or_signal(char *prompt, int *signal)
             /* select resets selectset if no input was available */
             has_input = select(fileno(rl_instream) + 1, &selectset,
                                NULL, NULL, timeoutp);
+            err = errno;
             if(PyOS_InputHook) PyOS_InputHook();
         }
 
-        if(has_input > 0) {
+        if (has_input > 0) {
             rl_callback_read_char();
         }
-        else if (errno == EINTR) {
+        else if (err == EINTR) {
             int s;
 #ifdef WITH_THREAD
             PyEval_RestoreThread(_PyOS_ReadlineTState);
