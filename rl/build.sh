@@ -40,5 +40,7 @@ mv readline-6.2 readline-lib
 cd readline-lib
 patch -p0 < ../readline62-001
 patch -p0 < ../readline62-002
+patch -p0 < ../readline62-003
+patch -p0 < ../readline62-004
 ./configure CPPFLAGS='-DNEED_EXTERN_PC -fPIC'
 make
