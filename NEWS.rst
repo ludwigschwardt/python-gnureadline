@@ -1,6 +1,13 @@
 History
 =======
 
+6.2.4 (2012-10-17)
+------------------
+
+* #15: Improved detection of compilers before Xcode 4.3
+* Uses Python 3.x readline.c from v3.3.0 tag (changeset 73997)
+* Updated to build against readline 6.2 (patch-level 4)
+
 6.2.2 (2012-02-24)
 ------------------
 
