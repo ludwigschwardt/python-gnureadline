@@ -36,14 +36,21 @@ UNIVERSAL = ''
 platform = distutils.util.get_platform()
 if platform.startswith('macosx'):
     osx_version = platform.split('-')[1]
+    SDK = ''
     if osx_version == '10.5':
-        UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX10.5.sdk -arch i386 -arch ppc -arch x86_64 -arch ppc64'
+        SDK = '/Developer/SDKs/MacOSX10.5.sdk'
+        UNIVERSAL = '-arch i386 -arch ppc -arch x86_64 -arch ppc64'
     elif osx_version == '10.6':
         # Starting with 10.6 (Snow Leopard), only Intel architecture is supported
-        UNIVERSAL = '-isysroot /Developer/SDKs/MacOSX10.6.sdk -arch i386 -arch x86_64'
+        SDK = '/Developer/SDKs/MacOSX10.6.sdk'
+        UNIVERSAL = '-arch i386 -arch x86_64'
     elif osx_version > '10.6':
         # Starting with 10.7 (Lion) and Xcode 4.3, the developer sysroot is inside the Xcode.app - ignore it
         UNIVERSAL = '-arch i386 -arch x86_64'
+
+    if os.path.exists(SDK):
+        # only add sysroot if it exists:
+        UNIVERSAL = "-isysroot %s %s" % (SDK, UNIVERSAL)
 
 # Since we have the latest readline (post 4.2), enable all readline functionality
 # These macros can be found in pyconfig.h.in in the main directory of the Python tarball
