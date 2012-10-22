@@ -26,3 +26,8 @@ Release HOWTO
    together with the corresponding .asc PGP signature file and a comment
    explaining the architecture and specific Python distribution for which
    it was built.
+
+5. Tag the git revision that was released::
+
+   $ git tag -s vx.y.z -m 'Released to PyPI as readline x.y.z'
+   $ git push origin vx.y.z
