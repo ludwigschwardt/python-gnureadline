@@ -1,6 +1,5 @@
 # Test across all Python versions (see tox.ini)
 test:
-	pip install tox
 	tox
 
 clean:
