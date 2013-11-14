@@ -9,7 +9,7 @@ install:
   - python setup.py install
 
 before_script:
-  - pip install py
+  - pip install pytest
 
 script:
   - py.test test.py
