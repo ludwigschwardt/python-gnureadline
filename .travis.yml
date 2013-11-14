@@ -9,8 +9,5 @@ python:
 install:
   - python setup.py install
 
-before_script:
-  - pip install py
-
 script:
   - py.test test.py
