@@ -2,7 +2,7 @@
 			   =====================
 
 Readline-Release: 6.2
-Patch-ID: readline62-002
+Patch-ID: readline62-002a
 
 Bug-Reported-by:	Vincent Sheffer <vince.sheffer@apisphere.com>
 Bug-Reference-ID:	<F13C1C4F-C44C-4071-BFED-4BB6D13CF92F@apisphere.com>
@@ -12,6 +12,8 @@ Bug-Description:
 
 The readline shared library helper script needs to be updated for Mac OS X
 10.7 (Lion, darwin11).
+
+[Ludwig: How about updating it for all Darwins from now on? Who still uses this on cats before Tiger?]
 
 Patch (apply with `patch -p0'):
 
@@ -27,7 +29,7 @@ Patch (apply with `patch -p0'):
 --- 172,176 ----
   
   # Darwin/MacOS X
-! darwin[89]*|darwin1[012]*)
+! darwin*)
   	SHOBJ_STATUS=supported
   	SHLIB_STATUS=supported
 ***************
@@ -40,7 +42,7 @@ Patch (apply with `patch -p0'):
 --- 201,205 ----
   
   	case "${host_os}" in
-! 	darwin[789]*|darwin1[012]*)	SHOBJ_LDFLAGS=''
+! 	darwin*)	SHOBJ_LDFLAGS=''
   			SHLIB_XLDFLAGS='-dynamiclib -arch_only `/usr/bin/arch` -install_name $(libdir)/$@ -current_version $(SHLIB_MAJOR)$(SHLIB_MINOR) -compatibility_version $(SHLIB_MAJOR) -v'
   			;;
 
