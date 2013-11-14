@@ -1,3 +1,4 @@
+# Trigger Mac OS X build (even though this is a Python test)
 language: objective-c
 
 before_install:
