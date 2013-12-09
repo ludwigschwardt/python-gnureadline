@@ -1,1 +1,1 @@
-from python_readline.readline import *
+from _gnureadline import *

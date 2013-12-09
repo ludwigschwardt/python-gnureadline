@@ -1116,7 +1116,7 @@ PyDoc_STRVAR(doc_module_le,
 #endif /* __APPLE__ */
 
 PyMODINIT_FUNC
-initreadline(void)
+init_gnureadline(void)
 {
     PyObject *m;
 
@@ -1126,13 +1126,13 @@ initreadline(void)
     }
 
     if (using_libedit_emulation)
-        m = Py_InitModule4("readline", readline_methods, doc_module_le,
+        m = Py_InitModule4("_gnureadline", readline_methods, doc_module_le,
                    (PyObject *)NULL, PYTHON_API_VERSION);
     else
 
 #endif /* __APPLE__ */
 
-    m = Py_InitModule4("readline", readline_methods, doc_module,
+    m = Py_InitModule4("_gnureadline", readline_methods, doc_module,
                        (PyObject *)NULL, PYTHON_API_VERSION);
     if (m == NULL)
         return;

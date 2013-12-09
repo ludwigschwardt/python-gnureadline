@@ -4,7 +4,8 @@ from os import path
 
 def test_pkg_import():
     """import without touching sys.path"""
-    from python_readline import readline
+    import gnureadline, _gnureadline
+    assert sys.modules['readline'] is _gnureadline
 
 
 def test_import():

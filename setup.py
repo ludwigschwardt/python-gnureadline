@@ -100,9 +100,9 @@ setup(
     license="GNU GPL",
     platforms=['MacOS X', 'Posix'],
     include_package_data=True,
-    py_modules=['readline'],
+    py_modules=['readline', 'gnureadline'],
     ext_modules=[
-        Extension(name="python_readline.readline",
+        Extension(name="_gnureadline",
                   sources=["Modules/%s.x/readline.c" % (sys.version_info[0],)],
                   include_dirs=['.'],
                   define_macros=DEFINE_MACROS,
