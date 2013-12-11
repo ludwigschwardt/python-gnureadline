@@ -2,10 +2,9 @@ import sys
 from os import path
 
 
-def test_pkg_import():
-    """import without touching sys.path"""
-    import gnureadline, _gnureadline
-    assert sys.modules['readline'] is _gnureadline
+def test_import_new():
+    """import gnureadline without touching sys.path"""
+    import gnureadline
 
 
 def test_import():
@@ -27,3 +26,6 @@ def test_import():
             msg % (readline.__file__, '\n'.join(sys.path))
     finally:
         sys.path = save_sys_path
+    
+    import gnureadline
+    assert readline.parse_and_bind is gnureadline.parse_and_bind

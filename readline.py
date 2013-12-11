@@ -1,1 +1,1 @@
-from _gnureadline import *
+from gnureadline import *
