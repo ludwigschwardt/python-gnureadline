@@ -1143,7 +1143,7 @@ PyDoc_STRVAR(doc_module_le,
 
 static struct PyModuleDef readlinemodule = {
     PyModuleDef_HEAD_INIT,
-    "readline",
+    "gnureadline",
     doc_module,
     -1,
     readline_methods,
@@ -1155,7 +1155,7 @@ static struct PyModuleDef readlinemodule = {
 
 
 PyMODINIT_FUNC
-PyInit_readline(void)
+PyInit_gnureadline(void)
 {
     PyObject *m;
 
