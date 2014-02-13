@@ -89,7 +89,7 @@ if building and not os.path.exists('readline/libreadline.a'):
         os.symlink(os.path.join('rl','readline-lib'), 'readline')
 
 setup(
-    name="readline",
+    name="gnureadline",
     version=VERSION,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
