@@ -39,14 +39,12 @@ if platform.startswith('macosx'):
     SDK = ''
     if osx_version == '10.5':
         SDK = '/Developer/SDKs/MacOSX10.5.sdk'
-        UNIVERSAL = '-arch i386 -arch ppc -arch x86_64 -arch ppc64'
     elif osx_version == '10.6':
         # Starting with 10.6 (Snow Leopard), only Intel architecture is supported
         SDK = '/Developer/SDKs/MacOSX10.6.sdk'
-        UNIVERSAL = '-arch i386 -arch x86_64'
     elif osx_version > '10.6':
         # Starting with 10.7 (Lion) and Xcode 4.3, the developer sysroot is inside the Xcode.app - ignore it
-        UNIVERSAL = '-arch i386 -arch x86_64'
+        pass
 
     if os.path.exists(SDK):
         # only add sysroot if it exists:
