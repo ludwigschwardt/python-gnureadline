@@ -94,7 +94,7 @@ setup(
     classifiers=CLASSIFIERS,
     maintainer="Ludwig Schwardt; Sridhar Ratnakumar",
     maintainer_email="ludwig.schwardt@gmail.com; github@srid.name",
-    url="http://github.com/ludwigschwardt/python-readline",
+    url="http://github.com/ludwigschwardt/python-gnureadline",
     license="GNU GPL",
     platforms=['MacOS X', 'Posix'],
     include_package_data=True,
