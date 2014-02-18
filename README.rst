@@ -1,5 +1,5 @@
-Stand-alone readline module
-===========================
+Stand-alone GNU readline module
+===============================
 
 Some platforms, such as Mac OS X, do not ship with `GNU readline`_ installed.
 The readline extension module in the standard library of Mac "system" Python
@@ -13,8 +13,14 @@ readline source code, which is compiled and statically linked to it. The end
 result is a package which is simple to install and requires no extra shared
 libraries.
 
+The module is called *gnureadline* so as not to clash with the readline module
+in the standard library. This keeps polite installers such as `pip`_ happy and
+is sufficient for shells such as `IPython`_. In order to use this module in
+the standard Python shell it has to be installed with the more impolite
+easy_install from `setuptools`_.
+
 The module can be used with both Python 2.x and 3.x, and has been tested with
-Python versions 2.5, 2.6, 2.7 and 3.1. The major and minor numbers of the module
+Python versions 2.6, 2.7, 3.2 and 3.3. The major and minor numbers of the module
 version reflect the version of the underlying GNU readline library, while the
 third (patch) number distinguishes different module updates based on the same
 readline library.
@@ -31,6 +37,9 @@ The latest development version is available from the `GitHub repository`_.
 
 .. _GNU readline: http://www.gnu.org/software/readline/
 .. _editline: http://www.thrysoee.dk/editline/
+.. _pip: http://www.pip-installer.org/
+.. _IPython: http://ipython.org/
+.. _setuptools: https://pypi.python.org/pypi/setuptools
 .. _ActivePython: http://community.activestate.com/faq/why-doesnt-activepython-u
 .. _pyreadline: http://pypi.python.org/pypi/pyreadline
 .. _GitHub repository: http://github.com/ludwigschwardt/python-gnureadline
