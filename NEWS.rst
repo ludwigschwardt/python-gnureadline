@@ -1,6 +1,15 @@
 History
 =======
 
+6.2.5 (2014-02-19)
+------------------
+
+* Renamed module to *gnureadline* to improve installation with pip
+* #23, #25-27, #29-33: Tweaks and package reworked to gnureadline
+* Uses Python 2.x readline.c from hg 2.7 branch (89084:6b10943a5916)
+* Uses Python 3.x readline.c from hg 3.3 branch (89085:6adac0d9b933)
+* Updated to build against readline 6.2 (patch-level 5)
+
 6.2.4.1 (2012-10-22)
 --------------------
 

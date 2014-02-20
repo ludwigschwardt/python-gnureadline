@@ -14,7 +14,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.rst')).read()
 
-VERSION = '6.2.4.1'
+VERSION = '6.2.5'
 DESCRIPTION = 'The standard Python readline extension statically linked against the GNU readline library.'
 LONG_DESCRIPTION = README + '\n\n' + NEWS
 CLASSIFIERS = [
@@ -39,14 +39,12 @@ if platform.startswith('macosx'):
     SDK = ''
     if osx_version == '10.5':
         SDK = '/Developer/SDKs/MacOSX10.5.sdk'
-        UNIVERSAL = '-arch i386 -arch ppc -arch x86_64 -arch ppc64'
     elif osx_version == '10.6':
         # Starting with 10.6 (Snow Leopard), only Intel architecture is supported
         SDK = '/Developer/SDKs/MacOSX10.6.sdk'
-        UNIVERSAL = '-arch i386 -arch x86_64'
     elif osx_version > '10.6':
         # Starting with 10.7 (Lion) and Xcode 4.3, the developer sysroot is inside the Xcode.app - ignore it
-        UNIVERSAL = '-arch i386 -arch x86_64'
+        pass
 
     if os.path.exists(SDK):
         # only add sysroot if it exists:
@@ -89,19 +87,20 @@ if building and not os.path.exists('readline/libreadline.a'):
         os.symlink(os.path.join('rl','readline-lib'), 'readline')
 
 setup(
-    name="readline",
+    name="gnureadline",
     version=VERSION,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
     maintainer="Ludwig Schwardt; Sridhar Ratnakumar",
     maintainer_email="ludwig.schwardt@gmail.com; github@srid.name",
-    url="http://github.com/ludwigschwardt/python-readline",
+    url="http://github.com/ludwigschwardt/python-gnureadline",
     license="GNU GPL",
     platforms=['MacOS X', 'Posix'],
     include_package_data=True,
+    py_modules=['readline'],
     ext_modules=[
-        Extension(name="readline",
+        Extension(name="gnureadline",
                   sources=["Modules/%s.x/readline.c" % (sys.version_info[0],)],
                   include_dirs=['.'],
                   define_macros=DEFINE_MACROS,
