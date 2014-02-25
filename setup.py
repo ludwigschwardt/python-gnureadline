@@ -30,26 +30,6 @@ CLASSIFIERS = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 
-# If we are on Mac OS 10.5 or later, attempt a universal binary, which is the way
-# the original system version of readline.so was compiled. Set up flags here.
-UNIVERSAL = ''
-platform = distutils.util.get_platform()
-if platform.startswith('macosx'):
-    osx_version = platform.split('-')[1]
-    SDK = ''
-    if osx_version == '10.5':
-        SDK = '/Developer/SDKs/MacOSX10.5.sdk'
-    elif osx_version == '10.6':
-        # Starting with 10.6 (Snow Leopard), only Intel architecture is supported
-        SDK = '/Developer/SDKs/MacOSX10.6.sdk'
-    elif osx_version > '10.6':
-        # Starting with 10.7 (Lion) and Xcode 4.3, the developer sysroot is inside the Xcode.app - ignore it
-        pass
-
-    if os.path.exists(SDK):
-        # only add sysroot if it exists:
-        UNIVERSAL = "-isysroot %s %s" % (SDK, UNIVERSAL)
-
 # Since we have the latest readline (post 4.2), enable all readline functionality
 # These macros can be found in pyconfig.h.in in the main directory of the Python tarball
 DEFINE_MACROS = [
@@ -104,8 +84,6 @@ setup(
                   sources=["Modules/%s.x/readline.c" % (sys.version_info[0],)],
                   include_dirs=['.'],
                   define_macros=DEFINE_MACROS,
-                  extra_compile_args=['-Wno-strict-prototypes'] + UNIVERSAL.split(),
-                  extra_link_args=UNIVERSAL.split(),
                   extra_objects=['readline/libreadline.a', 'readline/libhistory.a'], 
                   libraries=['ncurses']
         ),
