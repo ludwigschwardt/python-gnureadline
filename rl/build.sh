@@ -30,4 +30,5 @@ patch -p0 < ../readline62-003
 patch -p0 < ../readline62-004
 patch -p0 < ../readline62-005a
 ./configure CPPFLAGS='-DNEED_EXTERN_PC -fPIC'
-make
+# Only the static libraries are required
+make static
