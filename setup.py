@@ -2,13 +2,11 @@
 
 import os
 import sys
-import glob
-import distutils
 
 from setuptools import setup, Extension
 
 if sys.platform == 'win32':
-    sys.exit('error: this module is not meant to work on Windows')
+    sys.exit('Error: this module is not meant to work on Windows (try pyreadline instead)')
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
