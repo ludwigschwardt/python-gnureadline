@@ -2,6 +2,8 @@
 
 import os
 import sys
+from distutils.command.build_ext import build_ext
+import subprocess
 
 from setuptools import setup, Extension
 
@@ -64,6 +66,27 @@ if building and not os.path.exists('readline/libreadline.a'):
     if not (os.path.exists('readline') or os.path.islink('readline')):
         os.symlink(os.path.join('rl','readline-lib'), 'readline')
 
+# Workaround for OS X 10.9.2 and Xcode 5.1+
+# The latest clang treats unrecognized command-line options as errors and the
+# Python CFLAGS variable contains unrecognized ones (e.g. -mno-fused-madd).
+# See Xcode 5.1 Release Notes (Compiler section) and
+# http://stackoverflow.com/questions/22313407 for more details. This workaround
+# follows the approach suggested in http://stackoverflow.com/questions/724664.
+class build_ext_subclass(build_ext):
+    def build_extensions(self):
+        if sys.platform == 'darwin':
+            # Test the compiler that will actually be used to see if it likes flags
+            proc = subprocess.Popen(self.compiler.compiler + ['-v'],
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            stdout, stderr = proc.communicate()
+            clang_mesg = "clang: error: unknown argument: '-mno-fused-madd'"
+            if proc.returncode and stderr.splitlines()[0].startswith(clang_mesg):
+                for ext in self.extensions:
+                    # Use temporary workaround to ignore invalid compiler option
+                    # Hopefully -mno-fused-madd goes away before this workaround!
+                    ext.extra_compile_args += ['-Wno-error=unused-command-line-argument-hard-error-in-future']
+        build_ext.build_extensions(self)
+
 setup(
     name="gnureadline",
     version=VERSION,
@@ -77,12 +100,13 @@ setup(
     platforms=['MacOS X', 'Posix'],
     include_package_data=True,
     py_modules=['readline'],
+    cmdclass={'build_ext' : build_ext_subclass},
     ext_modules=[
         Extension(name="gnureadline",
                   sources=["Modules/%s.x/readline.c" % (sys.version_info[0],)],
                   include_dirs=['.'],
                   define_macros=DEFINE_MACROS,
-                  extra_objects=['readline/libreadline.a', 'readline/libhistory.a'], 
+                  extra_objects=['readline/libreadline.a', 'readline/libhistory.a'],
                   libraries=['ncurses']
         ),
     ],
