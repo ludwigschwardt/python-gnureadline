@@ -1,6 +1,16 @@
 History
 =======
 
+6.3.3 (2014-04-08)
+------------------
+
+* Major rework of OS X build process (detect arches, no custom flags)
+* #20, #22, #28: Various issues addressed by new streamlined build
+* #28: Use $CC or cc to compile libreadline instead of default gcc
+* #35: Workaround for clang from Xcode 5.1 and Mac OS X 10.9.2
+* Uses Python 3.4 readline.c from hg 3.4 branch (89086:3110fb3095a2)
+* Updated to build against readline 6.3 (patch-level 3)
+
 6.2.5 (2014-02-19)
 ------------------
 
