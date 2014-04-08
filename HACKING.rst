@@ -42,5 +42,5 @@ Release HOWTO
 
 8. Tag the git revision that was released::
 
-   $ git tag -s vx.y.z -m 'Released to PyPI as readline x.y.z'
+   $ git tag -s vx.y.z -m 'Released to PyPI as gnureadline x.y.z'
    $ git push origin vx.y.z
