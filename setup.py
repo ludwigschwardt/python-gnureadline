@@ -77,7 +77,8 @@ class build_ext_subclass(build_ext):
         if sys.platform == 'darwin':
             # Test the compiler that will actually be used to see if it likes flags
             proc = subprocess.Popen(self.compiler.compiler + ['-v'],
-                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    universal_newlines=True)
             stdout, stderr = proc.communicate()
             clang_mesg = "clang: error: unknown argument: '-mno-fused-madd'"
             if proc.returncode and stderr.splitlines()[0].startswith(clang_mesg):
