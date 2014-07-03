@@ -42,6 +42,14 @@ DEFINE_MACROS = [
     ('HAVE_RL_PRE_INPUT_HOOK', None),
 ]
 
+
+def which_shell():
+    valid_paths = ["/bin/bash", "/usr/local/bin/bash", "/bin/sh"]
+    for path in valid_paths:
+        if os.path.exists(path):
+            return path
+    raise IOError("No Shell Found")
+
 # Check if any of the distutils commands involves building the module,
 # and check for quiet vs. verbose option
 building = False
@@ -53,15 +61,16 @@ for s in sys.argv[1:]:
         verbose = False
     if s in ['--verbose', '-v']:
         verbose = True
-    
+
 # Build readline first, if it is not there and we are building the module
 if building and not os.path.exists('readline/libreadline.a'):
+    shell_path = which_shell()
     if verbose:
         print("\n============ Building the readline library ============\n")
-        os.system('cd rl && /bin/bash ./build.sh')
+        os.system('cd rl && %s ./build.sh' % shell_path)
         print("\n============ Building the readline extension module ============\n")
     else:
-        os.system('cd rl && /bin/bash ./build.sh > /dev/null 2>&1')        
+        os.system('cd rl && %s ./build.sh > /dev/null 2>&1' % shell_path)
     # Add symlink that simplifies include and link paths to real library
     if not (os.path.exists('readline') or os.path.islink('readline')):
         os.symlink(os.path.join('rl','readline-lib'), 'readline')
