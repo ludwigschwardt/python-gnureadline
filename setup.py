@@ -23,7 +23,7 @@ CLASSIFIERS = [
     'Environment :: Console',
     'Intended Audience :: Developers',
     'Intended Audience :: End Users/Desktop',
-    'License :: OSI Approved :: GNU General Public License (GPL)',
+    'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
     'Operating System :: MacOS :: MacOS X',
     'Operating System :: POSIX',
     'Programming Language :: C',
