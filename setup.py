@@ -9,6 +9,8 @@ from setuptools import setup, Extension
 
 if sys.platform == 'win32':
     sys.exit('Error: this module is not meant to work on Windows (try pyreadline instead)')
+elif sys.platform == 'cygwin':
+    sys.exit('Error: this module is not needed for Cygwin (and probably does not compile anyway)')
 
 here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
