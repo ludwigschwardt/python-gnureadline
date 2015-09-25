@@ -237,6 +237,43 @@ Save a readline history file.\n\
 The default filename is ~/.history.");
 
 
+#ifdef HAVE_RL_APPEND_HISTORY
+/* Exported function to save part of a readline history file */
+
+static PyObject *
+append_history_file(PyObject *self, PyObject *args)
+{
+    int nelements;
+    PyObject *filename_obj = Py_None, *filename_bytes;
+    char *filename;
+    int err;
+    if (!PyArg_ParseTuple(args, "i|O:append_history_file", &nelements, &filename_obj))
+        return NULL;
+    if (filename_obj != Py_None) {
+        if (!PyUnicode_FSConverter(filename_obj, &filename_bytes))
+            return NULL;
+        filename = PyBytes_AsString(filename_bytes);
+    } else {
+        filename_bytes = NULL;
+        filename = NULL;
+    }
+    errno = err = append_history(nelements, filename);
+    if (!err && _history_length >= 0)
+        history_truncate_file(filename, _history_length);
+    Py_XDECREF(filename_bytes);
+    errno = err;
+    if (errno)
+        return PyErr_SetFromErrno(PyExc_IOError);
+    Py_RETURN_NONE;
+}
+
+PyDoc_STRVAR(doc_append_history_file,
+"append_history_file(nelements[, filename]) -> None\n\
+Append the last nelements of the history list to file.\n\
+The default filename is ~/.history.");
+#endif
+
+
 /* Set history length */
 
 static PyObject*
@@ -747,6 +784,10 @@ static struct PyMethodDef readline_methods[] =
      METH_VARARGS, doc_read_history_file},
     {"write_history_file", write_history_file,
      METH_VARARGS, doc_write_history_file},
+#ifdef HAVE_RL_APPEND_HISTORY
+    {"append_history_file", append_history_file,
+     METH_VARARGS, doc_append_history_file},
+#endif
     {"get_history_item", get_history_item,
      METH_VARARGS, doc_get_history_item},
     {"get_current_history_length", (PyCFunction)get_current_history_length,
@@ -1019,6 +1060,21 @@ setup_readline(readlinestate *mod_state)
 
     mod_state->begidx = PyLong_FromLong(0L);
     mod_state->endidx = PyLong_FromLong(0L);
+
+#ifndef __APPLE__
+    if (!isatty(STDOUT_FILENO)) {
+        /* Issue #19884: stdout is no a terminal. Disable meta modifier
+           keys to not write the ANSI sequence "\033[1034h" into stdout. On
+           terminals supporting 8 bit characters like TERM=xterm-256color
+           (which is now the default Fedora since Fedora 18), the meta key is
+           used to enable support of 8 bit characters (ANSI sequence
+           "\033[1034h").
+
+           With libedit, this call makes readline() crash. */
+        rl_variable_bind ("enable-meta-key", "off");
+    }
+#endif
+
     /* Initialize (allows .inputrc to override)
      *
      * XXX: A bug in the readline-2.2 library causes a memory leak
@@ -1046,8 +1102,6 @@ rlhandler(char *text)
     completed_input_string = text;
     rl_callback_handler_remove();
 }
-
-extern PyThreadState* _PyOS_ReadlineTState;
 
 static char *
 readline_until_enter_or_signal(const char *prompt, int *signal)
@@ -1270,5 +1324,9 @@ PyInit_gnureadline(void)
     mod_state = (readlinestate *) PyModule_GetState(m);
     PyOS_ReadlineFunctionPointer = call_readline;
     setup_readline(mod_state);
+
+    PyModule_AddIntConstant(m, "_READLINE_VERSION", RL_READLINE_VERSION);
+    PyModule_AddIntConstant(m, "_READLINE_RUNTIME_VERSION", rl_readline_version);
+
     return m;
 }

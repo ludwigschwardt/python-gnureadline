@@ -35,6 +35,7 @@ CLASSIFIERS = [
 # Since we have the latest readline (post 4.2), enable all readline functionality
 # These macros can be found in pyconfig.h.in in the main directory of the Python tarball
 DEFINE_MACROS = [
+    ('HAVE_RL_APPEND_HISTORY', None),
     ('HAVE_RL_CALLBACK', None),
     ('HAVE_RL_CATCH_SIGNAL', None),
     ('HAVE_RL_COMPLETION_APPEND_CHARACTER', None),
