@@ -12,6 +12,8 @@ if [ `uname` == "Darwin" ]; then
 	osx_compiler=${CC-cc}
 	cc_override="CC=$osx_compiler"
 	echo "Using compiler $osx_compiler on OS X"
+	# Parse output of cc -v to guess real compiler (works with clang and gcc, at least)
+	echo "Guessing actual compiler:" `$osx_compiler -v 2>&1 | grep ' version '`
 	detected_arches="Compiler supports architectures:"
 	echo $'#include <stdio.h>\nint main() {\n  printf("Hello world\\n");\n}' > test.c
 	# Find out which architectures are supported by doing a test compile AND link per arch
