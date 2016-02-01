@@ -1095,6 +1095,107 @@ setup_readline(readlinestate *mod_state)
 
 #if defined(HAVE_RL_CALLBACK) && defined(HAVE_SELECT)
 
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION < 0x0700
+
+#include <readline/rlprivate.h>
+
+static void
+_rl_isearch_fini (cxt)
+     _rl_search_cxt *cxt;
+{
+  /* First put back the original state. */
+  strcpy (rl_line_buffer, cxt->lines[cxt->save_line]);
+
+  rl_restore_prompt ();
+
+  /* do not try to save the last search string,  */
+  /* Save the search string for possible later use. */
+  /*
+  FREE (last_isearch_string);
+  last_isearch_string = cxt->search_string;
+  last_isearch_string_len = cxt->search_string_index;
+  cxt->search_string = 0;
+  */
+
+  if (cxt->last_found_line < cxt->save_line)
+    rl_get_previous_history (cxt->save_line - cxt->last_found_line, 0);
+  else
+    rl_get_next_history (cxt->last_found_line - cxt->save_line, 0);
+
+  /* If the string was not found, put point at the end of the last matching
+     line.  If last_found_line == orig_line, we didn't find any matching
+     history lines at all, so put point back in its original position. */
+  if (cxt->sline_index < 0)
+    {
+      if (cxt->last_found_line == cxt->save_line)
+	cxt->sline_index = cxt->save_point;
+      else
+	cxt->sline_index = strlen (rl_line_buffer);
+      rl_mark = cxt->save_mark;
+    }
+
+  rl_point = cxt->sline_index;
+  /* Don't worry about where to put the mark here; rl_get_previous_history
+     and rl_get_next_history take care of it. */
+
+  rl_clear_message ();
+}
+
+int
+_rl_isearch_cleanup (cxt, r)
+     _rl_search_cxt *cxt;
+     int r;
+{
+  if (r >= 0)
+    _rl_isearch_fini (cxt);
+  _rl_scxt_dispose (cxt, 0);
+  _rl_iscxt = 0;
+
+  RL_UNSETSTATE(RL_STATE_ISEARCH);
+
+  return (r != 0);
+}
+
+
+int
+_rl_nsearch_cleanup (cxt, r)
+     _rl_search_cxt *cxt;
+     int r;
+{
+  _rl_scxt_dispose (cxt, 0);
+  _rl_nscxt = 0;
+
+  RL_UNSETSTATE(RL_STATE_NSEARCH);
+
+  return (r != 1);
+}
+
+/* Make sure that this agrees with cases in rl_callback_read_char */
+void
+rl_callback_sigcleanup ()
+{
+  if (RL_ISSTATE (RL_STATE_CALLBACK) == 0)
+    return;
+
+  if (RL_ISSTATE (RL_STATE_ISEARCH))
+    _rl_isearch_cleanup (_rl_iscxt, 0);
+  else if (RL_ISSTATE (RL_STATE_NSEARCH))
+    _rl_nsearch_cleanup (_rl_nscxt, 0);
+  else if (RL_ISSTATE (RL_STATE_VIMOTION))
+    RL_UNSETSTATE (RL_STATE_VIMOTION);
+  else if (RL_ISSTATE (RL_STATE_NUMERICARG))
+    {
+      _rl_argcxt = 0;
+      RL_UNSETSTATE (RL_STATE_NUMERICARG);
+    }
+  else if (RL_ISSTATE (RL_STATE_MULTIKEY))
+    RL_UNSETSTATE (RL_STATE_MULTIKEY);
+
+  _rl_callback_func = 0;
+}
+#endif
+
+
 static  char *completed_input_string;
 static void
 rlhandler(char *text)
@@ -1151,12 +1252,7 @@ readline_until_enter_or_signal(const char *prompt, int *signal)
             PyEval_SaveThread();
 #endif
             if (s < 0) {
-
-#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0700
  	        rl_callback_sigcleanup();
-#else
-	        RL_UNSETSTATE(RL_STATE_ISEARCH);
-#endif
                 rl_free_line_state();
                 rl_cleanup_after_signal();
                 rl_callback_handler_remove();
