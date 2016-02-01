@@ -1151,6 +1151,12 @@ readline_until_enter_or_signal(const char *prompt, int *signal)
             PyEval_SaveThread();
 #endif
             if (s < 0) {
+
+#if defined(RL_READLINE_VERSION) && RL_READLINE_VERSION >= 0x0700
+ 	        rl_callback_sigcleanup();
+#else
+	        RL_UNSETSTATE(RL_STATE_ISEARCH);
+#endif
                 rl_free_line_state();
                 rl_cleanup_after_signal();
                 rl_callback_handler_remove();
