@@ -20,21 +20,21 @@ the standard Python shell it has to be installed with the more impolite
 easy_install from `setuptools`_. **It is recommended that you use the latest
 pip >= 1.4 together with setuptools >= 0.8 to install gnureadline.** This will
 download a binary wheel from PyPI if available, thereby bypassing the need
-for compilation and its slew of potential problems.
+for compilation and its slew of potential problems (especially on OS X).
 
 The module can be used with both Python 2.x and 3.x, and has been tested with
-Python versions 2.6, 2.7, 3.2 and 3.3. The first three numbers of the module
-version reflect the version of the underlying GNU readline library (major,
-minor and patch level), while any additional fourth number distinguishes
+Python versions 2.6, 2.7, 3.2, 3.3, 3.4, 3.5 and 3.6. The first three numbers of
+the module version reflect the version of the underlying GNU readline library
+(major, minor and patch level), while any additional fourth number distinguishes
 different module updates based on the same readline library.
 
 This module is usually unnecessary on Linux and other Unix systems with default
 readline support. An exception is if you have a Python distribution that does
 not include GNU readline due to licensing restrictions (such as ActiveState's
-`ActivePython`_). If you are using Windows, which also ships without GNU 
-readline, you might want to consider using the `pyreadline`_ module instead, 
+`ActivePython`_). If you are using Windows, which also ships without GNU
+readline, you might want to consider using the `pyreadline`_ module instead,
 which is a readline replacement written in pure Python that interacts with the
-Windows clipboard. 
+Windows clipboard.
 
 The latest development version is available from the `GitHub repository`_.
 
