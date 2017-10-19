@@ -3,7 +3,7 @@ language: objective-c
 
 before_install:
    - brew update
-   - brew install python --without-readline
+   - brew upgrade python --without-readline
    - export PATH=/usr/local/bin:$PATH
 
 install:
