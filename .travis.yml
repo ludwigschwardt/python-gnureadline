@@ -3,14 +3,19 @@ language: objective-c
 
 before_install:
    - brew update
-   - brew upgrade python --without-readline
+   - brew remove python --ignore-dependencies
+   - brew install python --without-readline
+   - brew install python3 --without-readline
    - export PATH=/usr/local/bin:$PATH
 
 install:
-  - python setup.py install
+  - python2 setup.py install
+  - python3 setup.py install
 
 before_script:
-  - pip install pytest
+  - pip2 install pytest
+  - pip3 install pytest
 
 script:
+  - py.test-2.7 test.py
   - py.test test.py
