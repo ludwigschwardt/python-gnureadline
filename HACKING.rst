@@ -32,15 +32,23 @@ Release HOWTO
     $ git tag -s vx.y.z -m 'Released to PyPI as gnureadline x.y.z'
     $ git push origin vx.y.z
 
-7. Clone python-gnureadline-wheels repository, update python-gnureadline
-   submodule to tagged version, bump BUILD_COMMIT to latest tag in .travis.yml
+7. Clone python-gnureadline-wheels repository and update python-gnureadline
+   submodule to tagged version::
+
+    $ cd python-gnureadline && git pull && git checkout vx.y.z
+    $ cd .. && git add python-gnureadline
+    $ git commit
+
+8. Bump BUILD_COMMIT to latest tag in .travis.yml of python-gnureadline-wheels
    and push to GitHub to trigger wheel production. Check progress at::
 
     https://travis-ci.org/MacPython/python-gnureadline-wheels
 
-8. Clone terryfy repository to get wheel-uploader utility and run::
+9. Clone terryfy repository to get wheel-uploader utility and run::
 
     $ VERSION=x.y.z
     $ CDN_URL=https://3f23b170c54c2533c070-1c8a9b3114517dc5fe17b7c3f8c63a43.ssl.cf2.rackcdn.com
     $ wheel-uploader -r testpypi -u $CDN_URL -s -v -w ~/scratch/wheelhouse -t manylinux1 gnureadline $VERSION
     $ wheel-uploader -r testpypi -u $CDN_URL -s -v -w ~/scratch/wheelhouse -t macosx gnureadline $VERSION
+    $ wheel-uploader -u $CDN_URL -s -v -w ~/scratch/wheelhouse -t manylinux1 gnureadline $VERSION
+    $ wheel-uploader -u $CDN_URL -s -v -w ~/scratch/wheelhouse -t macosx gnureadline $VERSION
