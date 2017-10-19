@@ -17,5 +17,5 @@ before_script:
   - pip3 install pytest
 
 script:
-  - py.test-2.7 test.py
-  - py.test test.py
+  - python2 /usr/local/bin/py.test test.py
+  - python3 /usr/local/bin/py.test test.py
