@@ -1,6 +1,16 @@
 History
 =======
 
+6.3.8 (2017-10-20)
+------------------
+
+* #42, #44: Address compiler issues (avoid Cygwin, fix multi-arch on gcc)
+* #40: Make GPLv3 license explicit
+* #39: Look for bash shell in more places
+* Uses Python 2.x readline.c from hg 2.7 branch (95814:192f9efe4a38)
+* Uses Python 3.x readline.c from hg 3.4 / 3.5 branch (95813:ec6ed10d611e)
+* Updated to build against readline 6.3 (patch-level 8)
+
 6.3.3 (2014-04-08)
 ------------------
 
@@ -75,10 +85,10 @@ History
 2.6.1 (2009-11-18)
 ------------------
 
-* Updated package to work with Mac OS 10.6 (Snow Leopard), which ships with 
+* Updated package to work with Mac OS 10.6 (Snow Leopard), which ships with
   Python 2.6.1
 * Uses readline.c from Python 2.6.1 release
-* Backported "spurious trailing space" bugfix from Python svn trunk (see e.g. 
+* Backported "spurious trailing space" bugfix from Python svn trunk (see e.g.
   https://bugs.launchpad.net/python/+bug/470824 for details on bug)
 * Updated to build against readline 6.0 (patch-level 4)
 * Now builds successfully on Linux (removed Mac-specific flags in this case),
@@ -87,7 +97,7 @@ History
 2.5.1 (2008-05-28)
 ------------------
 
-* Updated package to work with Mac OS 10.5 (Leopard), which ships with Python 
+* Updated package to work with Mac OS 10.5 (Leopard), which ships with Python
   2.5.1
 * Uses readline.c from Python 2.5.1 release
 * Updated to build against readline 5.2 (patch-level 12)
@@ -96,6 +106,6 @@ History
 2.4.2 (2005-12-26)
 ------------------
 
-* Original package by Bob Ippolito, supporting Python 2.3 / 2.4 on Mac OS 10.3 
+* Original package by Bob Ippolito, supporting Python 2.3 / 2.4 on Mac OS 10.3
   (Panther) and 10.4 (Tiger)
 * Builds against readline 5.1
