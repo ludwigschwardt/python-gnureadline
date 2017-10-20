@@ -21,7 +21,7 @@ does not depend on gnureadline anymore since version 5.0 as it now uses**
 
 In order to use this module in the standard Python shell it has to be installed
 with the more impolite easy_install from `setuptools`_. **It is recommended that
-you use pip >= 1.4 together with setuptools >= 0.8 to install gnureadline.**
+you use pip >= 8.0 together with setuptools >= 0.8 to install gnureadline.**
 This will download a binary wheel from PyPI if available, thereby bypassing the
 need for compilation and its slew of potential problems (especially on macOS).
 
