@@ -15,9 +15,9 @@ libraries.
 
 The module is called *gnureadline* so as not to clash with the readline module
 in the standard library. This keeps polite installers such as `pip`_ happy and
-is sufficient for shells such as `IPython`_. **Please take note that `IPython`_
-does not depend on gnureadline anymore since version 5.0 as it now uses
-`prompt_toolkit`_ instead**.
+is sufficient for shells such as `IPython`_. **Please take note that IPython
+does not depend on gnureadline anymore since version 5.0 as it now uses**
+`prompt_toolkit`_ **instead**.
 
 In order to use this module in the standard Python shell it has to be installed
 with the more impolite easy_install from `setuptools`_. **It is recommended that
