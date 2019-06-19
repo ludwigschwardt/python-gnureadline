@@ -45,17 +45,10 @@ if [ `uname` == "Darwin" ]; then
 fi
 
 rm -rf readline-lib
-tar xzvf readline-6.3.tar.gz
-mv readline-6.3 readline-lib
+tar xzvf readline-8.0.tar.gz
+mv readline-8.0 readline-lib
 cd readline-lib
-patch -p0 < ../readline63-001
-patch -p0 < ../readline63-002
-patch -p0 < ../readline63-003
-patch -p0 < ../readline63-004
-patch -p0 < ../readline63-005
-patch -p0 < ../readline63-006
-patch -p0 < ../readline63-007
-patch -p0 < ../readline63-008
+# Future reminder: patch -p0 < ../readline80-001
 # Force compiler to CC/cc in the case of Darwin
 ./configure CPPFLAGS='-DNEED_EXTERN_PC -fPIC' $cc_override
 # Only the static libraries are required
