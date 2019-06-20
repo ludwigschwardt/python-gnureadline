@@ -2,11 +2,10 @@
 language: objective-c
 
 before_install:
+   # The Travis Homebrew setup comes with python and python@2 pre-installed
    - brew update
-   - brew remove python python@2 readline --ignore-dependencies
-   - brew install pkg-config openssl gdbm sqlite xz
-   - brew install python --ignore-dependencies --build-from-source
-   - brew install python@2 --ignore-dependencies --build-from-source
+   # Hack out readline so that we can test our own version
+   - brew remove readline --ignore-dependencies
    - export PATH=/usr/local/bin:$PATH
 
 install:
