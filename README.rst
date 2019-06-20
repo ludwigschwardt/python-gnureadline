@@ -1,7 +1,7 @@
 Stand-alone GNU readline module
 ===============================
 
-Some platforms, such as Mac OS X, do not ship with `GNU readline`_ installed.
+Some platforms, such as macOS, do not ship with `GNU readline`_ installed.
 The readline extension module in the standard library of Mac "system" Python
 uses NetBSD's `editline`_ (libedit) library instead, which is a readline
 replacement with a less restrictive software license.
@@ -15,12 +15,15 @@ libraries.
 
 The module is called *gnureadline* so as not to clash with the readline module
 in the standard library. This keeps polite installers such as `pip`_ happy and
-is sufficient for shells such as `IPython`_. In order to use this module in
-the standard Python shell it has to be installed with the more impolite
-easy_install from `setuptools`_. **It is recommended that you use the latest
-pip >= 1.4 together with setuptools >= 0.8 to install gnureadline.** This will
-download a binary wheel from PyPI if available, thereby bypassing the need
-for compilation and its slew of potential problems (especially on OS X).
+is sufficient for shells such as `IPython`_. **Please take note that IPython
+does not depend on gnureadline anymore since version 5.0 as it now uses**
+`prompt_toolkit`_ **instead**.
+
+In order to use this module in the standard Python shell it has to be installed
+with the more impolite easy_install from `setuptools`_. **It is recommended that
+you use pip >= 8.0 together with setuptools >= 0.8 to install gnureadline.**
+This will download a binary wheel from PyPI if available, thereby bypassing the
+need for compilation and its slew of potential problems (especially on macOS).
 
 The module can be used with both Python 2.x and 3.x, and has been tested with
 Python versions 2.6, 2.7, 3.2, 3.3, 3.4, 3.5 and 3.6. The first three numbers of
@@ -42,6 +45,7 @@ The latest development version is available from the `GitHub repository`_.
 .. _editline: http://www.thrysoee.dk/editline/
 .. _pip: http://www.pip-installer.org/
 .. _IPython: http://ipython.org/
+.. _prompt_toolkit: http://python-prompt-toolkit.readthedocs.io/en/stable/
 .. _setuptools: https://pypi.python.org/pypi/setuptools
 .. _ActivePython: http://community.activestate.com/faq/why-doesnt-activepython-u
 .. _pyreadline: http://pypi.python.org/pypi/pyreadline

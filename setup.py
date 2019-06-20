@@ -16,7 +16,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.rst')).read()
 
-VERSION = '6.3.3'
+VERSION = '8.0.0a1'
 DESCRIPTION = 'The standard Python readline extension statically linked against the GNU readline library.'
 LONG_DESCRIPTION = README + '\n\n' + NEWS
 CLASSIFIERS = [
@@ -43,6 +43,7 @@ DEFINE_MACROS = [
     ('HAVE_RL_COMPLETION_MATCHES', None),
     ('HAVE_RL_COMPLETION_SUPPRESS_APPEND', None),
     ('HAVE_RL_PRE_INPUT_HOOK', None),
+    ('HAVE_RL_RESIZE_TERMINAL', None),
 ]
 
 
@@ -52,6 +53,7 @@ def which_shell():
         if os.path.exists(path):
             return path
     raise IOError("No Shell Found")
+
 
 # Check if any of the distutils commands involves building the module,
 # and check for quiet vs. verbose option
@@ -76,7 +78,8 @@ if building and not os.path.exists('readline/libreadline.a'):
         os.system('cd rl && %s ./build.sh > /dev/null 2>&1' % shell_path)
     # Add symlink that simplifies include and link paths to real library
     if not (os.path.exists('readline') or os.path.islink('readline')):
-        os.symlink(os.path.join('rl','readline-lib'), 'readline')
+        os.symlink(os.path.join('rl', 'readline-lib'), 'readline')
+
 
 # Workaround for OS X 10.9.2 and Xcode 5.1+
 # The latest clang treats unrecognized command-line options as errors and the
@@ -100,6 +103,7 @@ class build_ext_subclass(build_ext):
                     ext.extra_compile_args += ['-Wno-error=unused-command-line-argument-hard-error-in-future']
         build_ext.build_extensions(self)
 
+
 # First try version-specific readline.c, otherwise fall back to major-only version
 source = os.path.join('Modules', '%d.%d' % sys.version_info[:2], 'readline.c')
 if not os.path.exists(source):
@@ -112,13 +116,13 @@ setup(
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
     maintainer="Ludwig Schwardt; Sridhar Ratnakumar",
-    maintainer_email="ludwig.schwardt@gmail.com; github@srid.name",
+    maintainer_email="ludwig.schwardt@gmail.com; srid@srid.ca",
     url="http://github.com/ludwigschwardt/python-gnureadline",
     license="GNU GPL",
     platforms=['MacOS X', 'Posix'],
     include_package_data=True,
     py_modules=['readline'],
-    cmdclass={'build_ext' : build_ext_subclass},
+    cmdclass={'build_ext': build_ext_subclass},
     ext_modules=[
         Extension(name="gnureadline",
                   sources=[source],
@@ -126,7 +130,7 @@ setup(
                   define_macros=DEFINE_MACROS,
                   extra_objects=['readline/libreadline.a', 'readline/libhistory.a'],
                   libraries=['ncurses']
-        ),
+                  ),
     ],
     zip_safe=False,
 )
