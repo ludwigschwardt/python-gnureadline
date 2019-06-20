@@ -4,8 +4,10 @@ language: objective-c
 before_install:
    - brew update
    - brew remove python --ignore-dependencies
-   - brew install python --without-readline
-   - brew install python3 --without-readline
+   - brew remove python@2 --ignore-dependencies
+   - brew remove readline --ignore-dependencies
+   - brew install python --ignore-dependencies --build-from-source
+   - brew install python@2 --ignore-dependencies --build-from-source
    - export PATH=/usr/local/bin:$PATH
 
 install:
