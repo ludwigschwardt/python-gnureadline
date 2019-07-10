@@ -20,6 +20,7 @@ VERSION = '8.0.0'
 DESCRIPTION = 'The standard Python readline extension statically linked against the GNU readline library.'
 LONG_DESCRIPTION = README + '\n\n' + NEWS
 CLASSIFIERS = [
+    'Development Status :: 5 - Production/Stable',
     'Environment :: Console',
     'Intended Audience :: Developers',
     'Intended Audience :: End Users/Desktop',
@@ -115,11 +116,9 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
-    maintainer="Ludwig Schwardt; Sridhar Ratnakumar",
-    maintainer_email="ludwig.schwardt@gmail.com; srid@srid.ca",
+    maintainer="Ludwig Schwardt, Sridhar Ratnakumar",
+    maintainer_email="ludwig.schwardt@gmail.com, srid@srid.ca",
     url="http://github.com/ludwigschwardt/python-gnureadline",
-    license="GNU GPL",
-    platforms=['MacOS X', 'Posix'],
     include_package_data=True,
     py_modules=['readline'],
     cmdclass={'build_ext': build_ext_subclass},
