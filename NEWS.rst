@@ -1,6 +1,15 @@
 History
 =======
 
+8.0.0 (2019-07-10)
+------------------
+
+* Uses Python 3.7.3 readline.c (commit ef10f88, 2019-03-20), also OK for 3.8
+* Uses Python 3.6.8 readline.c (commit 25555e0, 2018-12-08)
+* Uses Python 3.4.4 readline.c (commit 7462b64, 2015-11-02)
+* Uses Python 2.7.16 readline.c (commit 89b5ea2, 2018-12-19)
+* Updated to build against readline 8.0
+
 6.3.8 (2017-10-20)
 ------------------
 
