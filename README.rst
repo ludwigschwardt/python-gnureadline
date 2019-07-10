@@ -1,6 +1,34 @@
 Stand-alone GNU readline module
 ===============================
 
+First... STOP
+-------------
+
+Consider this: do you really need this package in 2019? You typically don't if
+
+- you use the Python provided by a standard Linux distribution like Ubuntu
+  Debian, CentOS, etc. *(It already uses the proper readline.)*
+- you run **Windows**
+  *(It won't work! Try* `pyreadline`_ *instead.)*
+- you use the Python provided by **Homebrew** or Fink on macOS
+  *(It has real readline already!)*
+- you want it for `IPython`_
+  *(It switched to* `prompt_toolkit`_ *in version 5.0.)*
+- you use a Python distribution like Anaconda or Enthought / Canopy
+  *(Again, real readline.)*
+
+You might need it if
+
+- you use Python provided by MacPorts or the system on macOS
+  *(Python compiled against libedit.)*
+- you use a Python distribution like ActivePython on Linux or macOS
+  *(This used to ship without readline.)*
+- you want to get the latest bug fixes and features in either the readline
+  library or its Python module *(Typically when stuck on older systems.)*
+
+Still interested?
+-----------------
+
 Some platforms, such as macOS, do not ship with `GNU readline`_ installed.
 The readline extension module in the standard library of Mac "system" Python
 uses NetBSD's `editline`_ (libedit) library instead, which is a readline
@@ -26,9 +54,9 @@ This will download a binary wheel from PyPI if available, thereby bypassing the
 need for compilation and its slew of potential problems (especially on macOS).
 
 The module can be used with both Python 2.x and 3.x, and has been tested with
-Python versions 2.6, 2.7, 3.2, 3.3, 3.4, 3.5 and 3.6. The first three numbers of
-the module version reflect the version of the underlying GNU readline library
-(major, minor and patch level), while any additional fourth number distinguishes
+Python versions 2.6, 2.7, and 3.2 to 3.8. The first three numbers of the module
+version reflect the version of the underlying GNU readline library (major,
+minor and patch level), while any additional fourth number distinguishes
 different module updates based on the same readline library.
 
 This module is usually unnecessary on Linux and other Unix systems with default
