@@ -125,7 +125,7 @@ setup(
     ext_modules=[
         Extension(name="gnureadline",
                   sources=[source],
-                  include_dirs=['.'],
+                  include_dirs=['.', os.path.dirname(source)],
                   define_macros=DEFINE_MACROS,
                   extra_objects=['readline/libreadline.a', 'readline/libhistory.a'],
                   libraries=['ncurses']
