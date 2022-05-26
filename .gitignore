@@ -7,3 +7,4 @@ readline-lib
 readline
 .DS_Store
 .cache
+.python-version
