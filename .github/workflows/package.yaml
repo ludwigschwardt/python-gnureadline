@@ -3,16 +3,16 @@ name: Python package
 on: [push]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  build_and_test:
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest]
         python: ["3.7", "3.8", "3.9"]
 
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Python
+      - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python }}
