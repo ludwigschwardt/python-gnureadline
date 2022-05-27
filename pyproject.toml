@@ -1,7 +1,7 @@
 # Suggested by https://scikit-hep.org/developer/gha_wheels
 [tool.cibuildwheel]
 test-requires = "pytest"
-test-command = "pytest test.py"
+test-command = "pytest {package}/test.py"
 build-verbosity = 1
 
 # Support Universal2 = Intel + ARM for Apple Silicon (but don't test it yet)
