@@ -1,0 +1,10 @@
+# Suggested by https://scikit-hep.org/developer/gha_wheels
+[tool.cibuildwheel]
+test-extras = "test"
+test-command = "pytest test.py"
+build-verbosity = 1
+
+# Support Universal2 = Intel + ARM for Apple Silicon (but don't test it yet)
+[tool.cibuildwheel.macos]
+archs = ["auto", "universal2"]
+test-skip = ["*universal2:arm64"]
