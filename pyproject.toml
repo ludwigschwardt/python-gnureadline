@@ -1,7 +1,10 @@
 # Suggested by https://scikit-hep.org/developer/gha_wheels
 [tool.cibuildwheel]
-# Disable building PyPy wheels on all platforms
-skip = "pp*"
+# Skip PyPy and musllinux for now
+skip = [
+    "pp*",
+    "*-musllinux_*",
+]
 test-requires = "pytest"
 test-command = "pytest {package}/test.py"
 build-verbosity = 1
