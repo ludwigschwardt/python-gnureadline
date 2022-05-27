@@ -3,32 +3,33 @@ name: Wheels
 on:
   workflow_dispatch:
 
-make_sdist:
-  name: Build SDist
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
+jobs:
+  make_sdist:
+    name: Build SDist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-    - name: Build SDist
-      run: pipx run build --sdist
+      - name: Build SDist
+        run: pipx run build --sdist
 
-    - uses: actions/upload-artifact@v3
-      with:
-        path: dist/*.tar.gz
+      - uses: actions/upload-artifact@v3
+        with:
+          path: dist/*.tar.gz
 
-build_wheels:
-  name: Build wheel on ${{ matrix.os }}
-  runs-on: ${{ matrix.os }}
-  strategy:
-    fail-fast: false
-    matrix:
-      os: [ubuntu-latest, macos-latest]
-  steps:
-    - uses: actions/checkout@v3
+  build_wheels:
+    name: Build wheel on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v3
 
-    - uses: pypa/cibuildwheel@v2.6.0
+      - uses: pypa/cibuildwheel@v2.6.0
 
-    - name: Upload wheels
-      uses: actions/upload-artifact@v3
-      with:
-        path: wheelhouse/*.whl
+      - name: Upload wheels
+        uses: actions/upload-artifact@v3
+        with:
+          path: wheelhouse/*.whl
