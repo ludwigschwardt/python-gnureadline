@@ -1,7 +1,13 @@
 name: Build wheels
 
 on:
+  # Only a manual trigger for now
   workflow_dispatch:
+
+env:
+  # Readline needs ncurses
+  CIBW_BEFORE_BUILD_LINUX: "yum install -y ncurses-devel"
+  CIBW_BEFORE_BUILD_MACOS: "brew install ncurses"
 
 jobs:
   make_sdist:
