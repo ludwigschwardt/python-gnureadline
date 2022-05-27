@@ -1,25 +1,18 @@
 # Suggested by https://scikit-hep.org/developer/gha_wheels
 [tool.cibuildwheel]
-# Skip PyPy and musllinux for now
-skip = [
-    "pp*",
-    "*-musllinux_*",
-]
+before-build = "make clean"
+# Skip Python 3.6, all PyPy's and musllinux for now
+skip = ["cp36-*", "pp*", "*-musllinux_*"]
 test-requires = "pytest"
 test-command = "pytest {package}/test.py"
 build-verbosity = 1
 
 [tool.cibuildwheel.linux]
-before-build = [
-    "yum install -y ncurses-devel",
-    "make clean",
-]
+# Assumes CentOS docker like manylinux2014
+before-all = "yum install -y ncurses-devel"
 
 [tool.cibuildwheel.macos]
-before-build = [
-    "brew install ncurses",
-    "make clean",
-]
+before-all = "brew install ncurses"
 # Support Universal2 = Intel + ARM for Apple Silicon (but don't test it yet)
-archs = ["auto", "universal2"]
-test-skip = ["*universal2:arm64"]
+archs = ["x86_64", "universal2"]
+test-skip = ["*_arm64", "*_universal2:arm64"]
