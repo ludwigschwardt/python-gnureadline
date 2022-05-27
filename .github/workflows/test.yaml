@@ -1,6 +1,10 @@
 name: Build and test package
 
-on: [push]
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '.github/workflows/**'
 
 jobs:
   build_and_test:
