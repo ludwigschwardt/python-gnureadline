@@ -18,7 +18,7 @@ if [ `uname` == "Darwin" ]; then
 	echo $'#include <stdio.h>\nint main() {\n  printf("Hello world\\n");\n}' > test.c
 	# Find out which architectures are supported by doing a test compile AND link per arch
   arch_flags=''
-	for arch in i386 x86_64 ppc ppc64; do
+	for arch in i386 x86_64 arm64; do
 		arch_flag=' -arch '$arch
 		if ${CC-cc} $arch_flag test.c 2> /dev/null; then
 			arch_flags+=$arch_flag
