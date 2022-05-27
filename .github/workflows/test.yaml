@@ -8,7 +8,7 @@ on:
 
 jobs:
   build_and_test:
-    name: Test package on Python ${{ matrix.python }} on ${{ matrix.os }}
+    name: Test on Python ${{ matrix.python }}, ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
