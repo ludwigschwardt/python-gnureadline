@@ -1,6 +1,6 @@
 # Suggested by https://scikit-hep.org/developer/gha_wheels
 [tool.cibuildwheel]
-test-extras = "test"
+test-requires = "pytest"
 test-command = "pytest test.py"
 build-verbosity = 1
 
