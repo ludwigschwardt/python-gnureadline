@@ -1,8 +1,7 @@
-# Suggested by https://scikit-hep.org/developer/gha_wheels
 [tool.cibuildwheel]
 before-build = "make clean"
-# Skip Python 3.6, all PyPy's and musllinux for now
-skip = ["cp36-*", "pp*", "*-musllinux_*"]
+# Skip PyPy and musllinux for now
+skip = ["pp*", "*-musllinux_*"]
 test-requires = "pytest"
 test-command = "pytest {package}/test.py"
 build-verbosity = 1
