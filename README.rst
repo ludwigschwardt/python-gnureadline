@@ -1,6 +1,8 @@
 Stand-alone GNU readline module
 ===============================
 
+![CI status](https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/test.yaml/badge.svg)
+
 First... STOP
 -------------
 
