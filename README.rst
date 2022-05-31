@@ -1,8 +1,8 @@
 Stand-alone GNU readline module
 ===============================
 
-.. |CI status| image:: https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/test.yaml/badge.svg
-   :alt: CI status
+.. image:: https://img.shields.io/github/workflow/status/ludwigschwardt/python-gnureadline/Build%20and%20test%20package
+   :alt: GitHub Workflow Status
    :target: https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/test.yaml
 
 First... STOP
@@ -51,14 +51,14 @@ is sufficient for shells such as `IPython`_. **Please take note that IPython
 does not depend on gnureadline anymore since version 5.0 as it now uses**
 `prompt_toolkit`_ **instead.**
 
-A typical use case is::
+A typical use case is:
 
-.. code-block:: python
+.. code:: python
 
-   try:
-       import gnureadline as readline
-   except ImportError:
-       import readline
+  try:
+      import gnureadline as readline
+  except ImportError:
+      import readline
 
 If you want to use this module as a drop-in replacement for readline in the
 standard Python shell, it has to be installed with the less polite easy_install
