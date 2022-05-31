@@ -1,54 +1,36 @@
 Release HOWTO
 =============
 
-1. Ensure that the master branch passes all tests on Travis at::
+1. Ensure that the main branch passes all tests. Run "tox" in a local checkout
+   and also look at the "Build and test package" GitHub Actions workflow at::
 
-   https://travis-ci.org/ludwigschwardt/python-gnureadline/branches
+   https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/test.yaml
 
-2. Update the macOS Travis branch and ensure that it also passes all tests::
-
-   $ git checkout travis-ci.macosx
-   $ git merge master [accept all "our" changes to .travis.yml]
-   $ git push
-   $ git checkout master
-
-3. Prepare for release by updating the changelog in NEWS.rst, bumping the
+2. Prepare for release by updating the changelog in NEWS.rst, bumping the
    version number in setup.py and doing a commit announcing the release to
-   the GitHub repository. Also clear out old build products::
+   the GitHub repository.
 
-   $ make clean
+3. Trigger the "Build wheels" GitHub Actions workflow manually by clicking the
+   "Run workflow" button at::
 
-4. Build source distribution::
+   https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/wheels.yaml
 
-   $ python setup.py sdist
+4. Download the "sdist" and "wheels" artifacts of the "Build wheels" workflow
+   and unzip::
 
-5. Securely upload source distribution to PyPI and/or the test PyPI (release!)::
+   $ mkdir wheelhouse
+   $ unzip sdist.zip -d wheelhouse
+   $ unzip wheels.zip -d wheelhouse
 
-   $ twine upload -r testpypi dist/*.tar.gz --sign
-   $ twine upload dist/*.tar.gz --sign
+5. Securely upload artifacts to the test PyPI and check that all is well::
 
-6. Tag the git revision that was released::
+   $ twine upload -r testpypi wheelhouse/* --sign
+
+6. Now upload artifacts to the real PyPI (release!)::
+
+   $ twine upload wheelhouse/* --sign
+
+7. Tag the git revision that was released::
 
     $ git tag -s vx.y.z -m 'Released to PyPI as gnureadline x.y.z'
     $ git push origin vx.y.z
-
-7. Clone python-gnureadline-wheels repository and update python-gnureadline
-   submodule to tagged version::
-
-    $ cd python-gnureadline && git pull && git checkout vx.y.z
-    $ cd .. && git add python-gnureadline
-    $ git commit
-
-8. Bump BUILD_COMMIT to latest tag in .travis.yml of python-gnureadline-wheels
-   and push to GitHub to trigger wheel production. Check progress at::
-
-    https://travis-ci.org/MacPython/python-gnureadline-wheels
-
-9. Clone terryfy repository to get wheel-uploader utility and run::
-
-    $ VERSION=x.y.z
-    $ CDN_URL=https://3f23b170c54c2533c070-1c8a9b3114517dc5fe17b7c3f8c63a43.ssl.cf2.rackcdn.com
-    $ wheel-uploader -r testpypi -u $CDN_URL -s -v -w ~/scratch/wheelhouse -t manylinux1 gnureadline $VERSION
-    $ wheel-uploader -r testpypi -u $CDN_URL -s -v -w ~/scratch/wheelhouse -t macosx gnureadline $VERSION
-    $ wheel-uploader -u $CDN_URL -s -v -w ~/scratch/wheelhouse -t manylinux1 gnureadline $VERSION
-    $ wheel-uploader -u $CDN_URL -s -v -w ~/scratch/wheelhouse -t macosx gnureadline $VERSION
