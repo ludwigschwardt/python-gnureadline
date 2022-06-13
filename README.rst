@@ -51,7 +51,7 @@ is sufficient for shells such as `IPython`_. **Please take note that IPython
 does not depend on gnureadline anymore since version 5.0 as it now uses**
 `prompt_toolkit`_ **instead.**
 
-A typical use case is:
+A typical use case is to override readline in your code like this:
 
 .. code:: python
 
