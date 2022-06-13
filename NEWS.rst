@@ -1,11 +1,20 @@
 History
 =======
 
+8.1.2 (2022-06-14)
+------------------
+* #57, #58: Now supports arm64 architecture (Apple M1, Raspberry Pi)
+* Moved CI from Travis to GitHub Actions and added cibuildwheel
+* Uses Python 3.11.0a7 readline.c (commit aac29af, 2021-10-13), OK for 3.10, 3.9
+* Uses Python 3.8.8 readline.c (commit f9d7c12, 2021-02-16), also OK for 3.7
+* Uses Python 2.7.18 readline.c (commit f32bcf8, 2019-11-07)
+* Updated to build against readline 8.1 (patch-level 2)
+
 8.0.0 (2019-07-10)
 ------------------
 
-* Uses Python 3.7.3 readline.c (commit ef10f88, 2019-03-20), also OK for 3.8
-* Uses Python 3.6.8 readline.c (commit 25555e0, 2018-12-08)
+* Uses Python 3.7.4 readline.c (commit ef10f88, 2019-03-20), also OK for 3.8
+* Uses Python 3.6.8 readline.c (commit 25555e0, 2018-12-08), also OK for 3.5
 * Uses Python 3.4.4 readline.c (commit 7462b64, 2015-11-02)
 * Uses Python 2.7.16 readline.c (commit 89b5ea2, 2018-12-19)
 * Updated to build against readline 8.0
