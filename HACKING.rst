@@ -2,7 +2,7 @@ Release HOWTO
 =============
 
 1. Ensure that the main branch passes all tests. Run "tox" in a local checkout
-   and also look at the "Build and test package" GitHub Actions workflow at::
+   and also look at the "Build and test package" GitHub Actions workflow at:
 
    https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/test.yaml
 
@@ -11,7 +11,7 @@ Release HOWTO
    the GitHub repository.
 
 3. Trigger the "Build wheels" GitHub Actions workflow manually by clicking the
-   "Run workflow" button at::
+   "Run workflow" button at:
 
    https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/wheels.yaml
 
@@ -24,13 +24,16 @@ Release HOWTO
 
 5. Securely upload artifacts to the test PyPI and check that all is well::
 
-   $ twine upload -r testpypi wheelhouse/* --sign
+   $ export IDENTITY=<identity>
+   $ twine upload -r testpypi wheelhouse/*.tar.gz --sign -i $IDENTITY
+   $ twine upload -r testpypi wheelhouse/*.whl --sign -i $IDENTITY
 
 6. Now upload artifacts to the real PyPI (release!)::
 
-   $ twine upload wheelhouse/* --sign
+   $ twine upload wheelhouse/*.tar.gz --sign -i $IDENTITY
+   $ twine upload wheelhouse/*.whl --sign -i $IDENTITY
 
 7. Tag the git revision that was released::
 
-    $ git tag -s vx.y.z -m 'Released to PyPI as gnureadline x.y.z'
+    $ git tag -s vx.y.z -m 'Released to PyPI as gnureadline x.y.z' -u $IDENTITY
     $ git push origin vx.y.z
