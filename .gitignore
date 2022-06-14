@@ -8,3 +8,4 @@ readline
 .DS_Store
 .cache
 .python-version
+.vscode
