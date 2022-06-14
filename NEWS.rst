@@ -4,7 +4,7 @@ History
 8.1.2 (2022-06-14)
 ------------------
 * #57, #58: Now supports arm64 architecture (Apple M1, Raspberry Pi)
-* Moved CI from Travis to GitHub Actions and added cibuildwheel
+* Moved CI from Travis + multibuild to GitHub Actions + cibuildwheel
 * Uses Python 3.11.0a7 readline.c (commit aac29af, 2021-10-13), OK for 3.10, 3.9
 * Uses Python 3.8.8 readline.c (commit f9d7c12, 2021-02-16), also OK for 3.7
 * Uses Python 2.7.18 readline.c (commit f32bcf8, 2019-11-07)
