@@ -1,6 +1,14 @@
 History
 =======
 
+6.2.4.2 (2022-06-24)
+--------------------
+
+* THIS PACKAGE IS DEPRECATED! USE gnureadline INSTEAD!
+* Add appropriate warnings to the docs to hammer this home
+* Prevent installation on Python 3.4 and later (the module is outdated)
+* Fix compilation on macOS 10.9+ to avoid crash before Python version check
+
 6.2.4.1 (2012-10-22)
 --------------------
 
@@ -56,10 +64,10 @@ History
 2.6.1 (2009-11-18)
 ------------------
 
-* Updated package to work with Mac OS 10.6 (Snow Leopard), which ships with 
+* Updated package to work with Mac OS 10.6 (Snow Leopard), which ships with
   Python 2.6.1
 * Uses readline.c from Python 2.6.1 release
-* Backported "spurious trailing space" bugfix from Python svn trunk (see e.g. 
+* Backported "spurious trailing space" bugfix from Python svn trunk (see e.g.
   https://bugs.launchpad.net/python/+bug/470824 for details on bug)
 * Updated to build against readline 6.0 (patch-level 4)
 * Now builds successfully on Linux (removed Mac-specific flags in this case),
@@ -68,7 +76,7 @@ History
 2.5.1 (2008-05-28)
 ------------------
 
-* Updated package to work with Mac OS 10.5 (Leopard), which ships with Python 
+* Updated package to work with Mac OS 10.5 (Leopard), which ships with Python
   2.5.1
 * Uses readline.c from Python 2.5.1 release
 * Updated to build against readline 5.2 (patch-level 12)
@@ -77,6 +85,6 @@ History
 2.4.2 (2005-12-26)
 ------------------
 
-* Original package by Bob Ippolito, supporting Python 2.3 / 2.4 on Mac OS 10.3 
+* Original package by Bob Ippolito, supporting Python 2.3 / 2.4 on Mac OS 10.3
   (Panther) and 10.4 (Tiger)
 * Builds against readline 5.1
