@@ -43,9 +43,16 @@ if platform.startswith('macosx'):
         # Starting with 10.6 (Snow Leopard), only Intel architecture is supported
         SDK = '/Developer/SDKs/MacOSX10.6.sdk'
         UNIVERSAL = '-arch i386 -arch x86_64'
-    elif osx_version > '10.6':
+    elif osx_version in ('10.7', '10.8'):
         # Starting with 10.7 (Lion) and Xcode 4.3, the developer sysroot is inside the Xcode.app - ignore it
         UNIVERSAL = '-arch i386 -arch x86_64'
+    elif osx_version > '10.8' and osx_version < '11':
+        # Drop 32-bit Intel in 10.9 (Mavericks)
+        UNIVERSAL = '-arch x86_64'
+    elif osx_version >= '11':
+        # Also build for M1 chip on 11.0 (Big Sur) and later
+        # XXX Since this also needs Python 3.8 it will probably never work :-)
+        UNIVERSAL = '-arch x86_64 -arch arm64'
 
     if os.path.exists(SDK):
         # only add sysroot if it exists:
@@ -98,6 +105,8 @@ setup(
     url="http://github.com/ludwigschwardt/python-readline",
     license="GNU GPL",
     platforms=['MacOS X', 'Posix'],
+    # Restrict Python to last version where this package still worked
+    python_requires='<3.4',
     include_package_data=True,
     ext_modules=[
         Extension(name="readline",
