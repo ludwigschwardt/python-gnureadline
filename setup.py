@@ -2,7 +2,6 @@
 
 import os
 import sys
-import glob
 import distutils
 
 from setuptools import setup, Extension
@@ -75,7 +74,7 @@ for s in sys.argv[1:]:
         verbose = False
     if s in ['--verbose', '-v']:
         verbose = True
-    
+
 # Build readline first, if it is not there and we are building the module
 if building and not os.path.exists('readline/libreadline.a'):
     if verbose:
@@ -83,7 +82,7 @@ if building and not os.path.exists('readline/libreadline.a'):
         os.system('cd rl && /bin/bash ./build.sh')
         print("\n============ Building the readline extension module ============\n")
     else:
-        os.system('cd rl && /bin/bash ./build.sh > /dev/null 2>&1')        
+        os.system('cd rl && /bin/bash ./build.sh > /dev/null 2>&1')
     # Add symlink that simplifies include and link paths to real library
     if not (os.path.exists('readline') or os.path.islink('readline')):
         os.symlink(os.path.join('rl','readline-lib'), 'readline')
@@ -107,7 +106,7 @@ setup(
                   define_macros=DEFINE_MACROS,
                   extra_compile_args=['-Wno-strict-prototypes'] + UNIVERSAL.split(),
                   extra_link_args=UNIVERSAL.split(),
-                  extra_objects=['readline/libreadline.a', 'readline/libhistory.a'], 
+                  extra_objects=['readline/libreadline.a', 'readline/libhistory.a'],
                   libraries=['ncurses']
         ),
     ],
