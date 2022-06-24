@@ -17,6 +17,7 @@ VERSION = '6.2.4.1'
 DESCRIPTION = 'The standard Python readline extension statically linked against the GNU readline library.'
 LONG_DESCRIPTION = README + '\n\n' + NEWS
 CLASSIFIERS = [
+    'Development Status :: 5 - Production/Stable',
     'Environment :: Console',
     'Intended Audience :: Developers',
     'Intended Audience :: End Users/Desktop',
@@ -100,11 +101,9 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
-    maintainer="Ludwig Schwardt; Sridhar Ratnakumar",
-    maintainer_email="ludwig.schwardt@gmail.com; github@srid.name",
-    url="http://github.com/ludwigschwardt/python-readline",
-    license="GNU GPL",
-    platforms=['MacOS X', 'Posix'],
+    maintainer="Ludwig Schwardt, Sridhar Ratnakumar",
+    maintainer_email="ludwig.schwardt@gmail.com, srid@srid.ca",
+    url="http://github.com/ludwigschwardt/python-gnureadline",
     # Restrict Python to last version where this package still worked
     python_requires='<3.4',
     include_package_data=True,
