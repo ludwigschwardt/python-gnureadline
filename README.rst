@@ -1,7 +1,7 @@
 Stand-alone GNU readline module
 ===============================
 
-.. image:: https://img.shields.io/github/workflow/status/ludwigschwardt/python-gnureadline/Build%20and%20test%20package
+.. image:: https://img.shields.io/github/actions/workflow/status/ludwigschwardt/python-gnureadline/test.yaml?branch=main
    :alt: GitHub Workflow Status
    :target: https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/test.yaml
 
