@@ -124,7 +124,7 @@ setup(
     maintainer_email="ludwig.schwardt@gmail.com, srid@srid.ca",
     url="http://github.com/ludwigschwardt/python-gnureadline",
     include_package_data=True,
-    py_modules=['readline'],
+    py_modules=['readline', 'override_readline'],
     cmdclass={'build_ext': build_ext_subclass},
     ext_modules=[
         Extension(name="gnureadline",
