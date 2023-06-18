@@ -28,6 +28,7 @@
 #  define RESTORE_LOCALE(sl)
 #endif
 
+#undef WITH_EDITLINE /* We are building GNU readline */
 #ifdef WITH_EDITLINE
 #  include <editline/readline.h>
 #else
