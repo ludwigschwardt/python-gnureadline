@@ -65,14 +65,14 @@ def check_module(module_name):
     return module
 
 
-def install_override(site_directory, customize_filename):
+def install_override(customize_path):
     """Add override to specified customization module and report back."""
+    site_directory, customize_filename = os.path.split(customize_path)
     banner = "\nAdd override to {filename}\n--------------------------------\n"
     print(banner.format(filename=customize_filename))
     if not os.path.exists(site_directory):
         os.makedirs(site_directory)
         print("Created site directory at {dir}".format(dir=site_directory))
-    customize_path = os.path.join(site_directory, customize_filename)
     file_mode = "r+t" if os.path.exists(customize_path) else "w+t"
     with io.open(customize_path, file_mode) as customize_file:
         if file_mode == "w+t":
@@ -91,6 +91,44 @@ def install_override(site_directory, customize_filename):
             print("(It is also pretty harmless to leave it in there...)")
 
 
+def override_usercustomize():
+    if not site.ENABLE_USER_SITE:
+        print(
+            "Could not override usercustomize.py because user site "
+            "directory is not enabled (maybe you are in a virtualenv?)"
+        )
+        return False
+    try:
+        import usercustomize
+    except ImportError:
+        path = os.path.join(site.getusersitepackages(), "usercustomize.py")
+    else:
+        path = usercustomize.__file__
+    try:
+        install_override(path)
+    except OSError:
+        print("Could not override usercustomize.py because file open/write failed")
+        return False
+    else:
+        return True
+
+
+def override_sitecustomize():
+    try:
+        import sitecustomize
+    except ImportError:
+        path = os.path.join(site.getsitepackages()[0], "sitecustomize.py")
+    else:
+        path = sitecustomize.__file__
+    try:
+        install_override(path)
+    except OSError:
+        print("Could not override sitecustomize.py because file open/write failed")
+        return False
+    else:
+        return True
+
+
 print(HEADER)
 readline = check_module("readline")
 gnureadline = check_module("gnureadline")
@@ -98,13 +136,6 @@ if not gnureadline:
     raise RuntimeError("Please install gnureadline first")
 if readline == gnureadline:
     print("It looks like readline is already overridden, but let's make sure")
-try:
-    install_override(site.getsitepackages()[0], "sitecustomize.py")
-except OSError:
-    print("Defaulting to user installation because normal site-packages is not writeable")
-    if not site.ENABLE_USER_SITE:
-        raise RuntimeError(
-            "Please enable user site directory, otherwise override won't work "
-            "(see site.ENABLE_USER_SITE documentation for details)"
-        )
-    install_override(site.getusersitepackages(), "usercustomize.py")
+
+if not override_usercustomize():
+    override_sitecustomize()
