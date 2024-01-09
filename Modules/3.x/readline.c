@@ -28,7 +28,8 @@
 #  define RESTORE_LOCALE(sl)
 #endif
 
-#ifdef WITH_EDITLINE
+/* Exclude on macOS as missing declaration of append_history */
+#if defined(WITH_EDITLINE) && !defined(__APPLE__)
 #  include <editline/readline.h>
 #else
 /* GNU readline definitions */
