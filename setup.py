@@ -45,6 +45,8 @@ DEFINE_MACROS = [
     ('HAVE_RL_COMPLETION_SUPPRESS_APPEND', None),
     ('HAVE_RL_PRE_INPUT_HOOK', None),
     ('HAVE_RL_RESIZE_TERMINAL', None),
+    # Ensure that the local checkout of readline includes its own headers
+    ('READLINE_LIBRARY', None),
 ]
 
 
@@ -125,7 +127,6 @@ setup(
     ext_modules=[
         Extension(name="gnureadline",
                   sources=[source],
-                  include_dirs=['.', os.path.dirname(source)],
                   define_macros=DEFINE_MACROS,
                   extra_objects=['readline/libreadline.a', 'readline/libhistory.a'],
                   libraries=['ncurses']

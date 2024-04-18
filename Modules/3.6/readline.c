@@ -29,8 +29,11 @@
 
 /* GNU readline definitions */
 #undef HAVE_CONFIG_H /* Else readline/chardefs.h includes strings.h */
-#include <readline/readline.h>
-#include <readline/history.h>
+/* Ensure that we get the intended local checkout of GNU readline
+ * and not some system version (which could be libedit in disguise).
+ */
+#include "../../readline/readline.h"
+#include "../../readline/history.h"
 
 #ifdef HAVE_RL_COMPLETION_MATCHES
 #define completion_matches(x, y) \
