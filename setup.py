@@ -118,6 +118,7 @@ setup(
     version=VERSION,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
+    long_description_content_type="text/x-rst",
     classifiers=CLASSIFIERS,
     maintainer="Ludwig Schwardt, Sridhar Ratnakumar",
     maintainer_email="ludwig.schwardt@gmail.com, srid@srid.ca",
