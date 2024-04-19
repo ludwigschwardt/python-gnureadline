@@ -12,7 +12,3 @@ before-all = "yum install -y ncurses-devel"
 
 [tool.cibuildwheel.macos]
 before-all = "brew install ncurses"
-# Support native arm64 and universal2 = Intel + ARM for Apple Silicon
-# XXX (but don't test it yet - we first need some M1 runners)
-archs = ["x86_64", "arm64", "universal2"]
-test-skip = ["*_arm64", "*_universal2:arm64"]
