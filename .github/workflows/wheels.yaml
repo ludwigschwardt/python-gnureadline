@@ -66,3 +66,27 @@ jobs:
         with:
           name: wheel_${{ matrix.os }}-${{ matrix.python }}
           path: wheelhouse/*.whl
+
+  combine:
+    needs: [build_sdist, build_wheel_linux, build_wheel_macos]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create paths
+        run: mkdir -p dist wheelhouse
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: wheel_*
+          path: wheelhouse/
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: sdist
+          path: dist/
+          merge-multiple: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: combined
+          path: |
+            dist/
+            wheelhouse/
