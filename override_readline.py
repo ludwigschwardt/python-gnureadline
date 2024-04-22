@@ -16,6 +16,7 @@ import io
 import os
 import os.path
 import site
+import sys
 
 
 HEADER = """
@@ -129,13 +130,19 @@ def override_sitecustomize():
         return True
 
 
-print(HEADER)
-readline = check_module("readline")
-gnureadline = check_module("gnureadline")
-if not gnureadline:
-    raise RuntimeError("Please install gnureadline first")
-if readline == gnureadline:
-    print("It looks like readline is already overridden, but let's make sure")
+def main():
+    print(HEADER)
+    readline = check_module("readline")
+    gnureadline = check_module("gnureadline")
+    if not gnureadline:
+        raise RuntimeError("Please install gnureadline first")
+    if readline == gnureadline:
+        print("It looks like readline is already overridden, but let's make sure")
+    success = override_usercustomize()
+    if not success:
+        success = override_sitecustomize()
+    return 0 if success else 1
 
-if not override_usercustomize():
-    override_sitecustomize()
+
+if __name__ == '__main__':
+    sys.exit(main())
