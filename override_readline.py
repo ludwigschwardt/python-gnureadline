@@ -19,12 +19,22 @@ import site
 import sys
 
 
-HEADER = """
+_HEADER = """
 This script will attempt to install an override in Python's site customization
 modules that replaces the default readline module with gnureadline.
 
 First check the existing readline module and its replacement
 ------------------------------------------------------------
+"""
+
+_REPORT = """
+The following override was added to {filename}:
+(full path: {full_path})
+
+{padded_override}
+
+Feel free to remove this{or_even_file} if not needed anymore
+(It is also pretty harmless to leave it in there...)
 """
 
 OVERRIDE = u"""
@@ -85,11 +95,13 @@ def install_override(customize_path):
         else:
             # File pointer should already be at the end of the file after read()
             customize_file.write(override)
-            kwargs = dict(filename=customize_filename)
-            print("The following override was added to {filename}:".format(**kwargs))
-            print("\n    ".join(override.split("\n")))
-            print("Feel free to remove this (or even the entire file) if not needed anymore.")
-            print("(It is also pretty harmless to leave it in there...)")
+            kwargs = dict(
+                filename=customize_filename,
+                full_path=customize_path,
+                padded_override="\n    ".join(override.split("\n")),
+                or_even_file=" (or even the entire file)" if file_mode == "w+t" else "",
+            )
+            print(_REPORT.format(**kwargs))
 
 
 def override_usercustomize():
@@ -131,7 +143,7 @@ def override_sitecustomize():
 
 
 def main():
-    print(HEADER)
+    print(_HEADER)
     readline = check_module("readline")
     gnureadline = check_module("gnureadline")
     if not gnureadline:
