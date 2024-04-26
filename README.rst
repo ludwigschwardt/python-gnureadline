@@ -99,8 +99,7 @@ user / site customization affects general scripts using readline as well.
 The Python Tutorial has a `section`_ describing these customization options.
 
 **Please take note that** `IPython`_ **does not depend on gnureadline for tab
-completion anymore. Since version 5.0 it uses** `prompt_toolkit`_ **instead,
-which can also provide readline-like functionality on Windows.**
+completion anymore. Since version 5.0 it uses** `prompt_toolkit`_ **instead.**
 
 Versions
 --------
@@ -113,6 +112,10 @@ distinguishes different module updates based on the same Readline library.
 
 The latest development version is available from the `GitHub repository`_.
 
+If you are using Windows, which also ships without GNU Readline, you might
+want to consider using the `pyreadline3`_ module instead, which is a readline
+replacement written in pure Python that interacts with the Windows clipboard.
+
 .. _GNU Readline: http://www.gnu.org/software/readline/
 .. _Editline: http://www.thrysoee.dk/editline/
 .. _site: https://docs.python.org/library/site.html
@@ -121,3 +124,4 @@ The latest development version is available from the `GitHub repository`_.
 .. _IPython: http://ipython.org/
 .. _prompt_toolkit: http://python-prompt-toolkit.readthedocs.io/en/stable/
 .. _GitHub repository: http://github.com/ludwigschwardt/python-gnureadline
+.. _pyreadline3: http://pypi.python.org/pypi/pyreadline3

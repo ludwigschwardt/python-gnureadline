@@ -8,7 +8,7 @@ import subprocess
 from setuptools import setup, Extension
 
 if sys.platform == 'win32':
-    sys.exit('Error: this module is not meant to work on Windows (try pyreadline instead)')
+    sys.exit('Error: this module is not meant to work on Windows (try pyreadline3 instead)')
 elif sys.platform == 'cygwin':
     sys.exit('Error: this module is not needed for Cygwin (and probably does not compile anyway)')
 
