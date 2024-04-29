@@ -39,7 +39,7 @@ interchangeable within Python, they are not fully equivalent. If you want
 proper Readline support, this module provides it by bundling the standard
 Python readline module with the GNU Readline source code, which is compiled
 and statically linked to it. The end result is a package which is simple to
-install and requires no extra shared libraries.
+install and only requires the system-dependent ncurses library.
 
 The module is called *gnureadline* so as not to clash with the existing
 readline module in the standard library. It supports two general needs:
