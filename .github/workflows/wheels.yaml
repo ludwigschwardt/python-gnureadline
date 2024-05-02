@@ -5,43 +5,88 @@ on:
   workflow_dispatch:
 
 jobs:
-  make_sdist:
-    name: Build SDist
+  build_sdist:
+    name: Build source distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Build SDist
+      - uses: actions/checkout@v4
+      - name: Build sdist
         run: pipx run build --sdist
-
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: sdist
           path: dist/*.tar.gz
 
-  build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+  build_wheel_linux:
+    name: Linux wheels
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        arch: [x86_64, aarch64]
+        python: [cp36, cp37, cp38, cp39, cp310, cp311, cp312]
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up QEMU
-        if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v2
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
         with:
-          platforms: all
-
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.11.2
+          platforms: arm64
+        if: matrix.arch != 'x86_64'
+      - uses: pypa/cibuildwheel@v2.17.0
         env:
-          CIBW_ARCHS_LINUX: auto64 aarch64
-
-      - name: Upload wheels
-        uses: actions/upload-artifact@v3
+          CIBW_ARCHS: ${{ matrix.arch }}
+          CIBW_BUILD: ${{ matrix.python }}-manylinux*
+      - uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: wheel_linux-${{ matrix.arch }}-${{ matrix.python }}
           path: wheelhouse/*.whl
+
+  build_wheel_macos:
+    name: macOS wheels
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-13, macos-14]
+        python: [cp36, cp37, cp38, cp39, cp310, cp311, cp312]
+        exclude:
+          # Python < 3.9 not natively available for Apple Silicon.
+          # cibuildwheel tries to do a cross build, which fails.
+          - os: macos-14
+            python: cp36
+          - os: macos-14
+            python: cp37
+          - os: macos-14
+            python: cp38
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pypa/cibuildwheel@v2.17.0
+        env:
+          CIBW_BUILD: ${{ matrix.python }}-macos*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheel_${{ matrix.os }}-${{ matrix.python }}
+          path: wheelhouse/*.whl
+
+  combine:
+    needs: [build_sdist, build_wheel_linux, build_wheel_macos]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create paths
+        run: mkdir -p dist wheelhouse
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: wheel_*
+          path: wheelhouse/
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: sdist
+          path: dist/
+          merge-multiple: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: combined
+          path: |
+            dist/
+            wheelhouse/

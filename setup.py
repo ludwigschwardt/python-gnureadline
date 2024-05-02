@@ -2,7 +2,7 @@
 
 import os
 import sys
-from distutils.command.build_ext import build_ext
+from setuptools.command.build_ext import build_ext
 import subprocess
 
 from setuptools import setup, Extension
@@ -39,12 +39,15 @@ DEFINE_MACROS = [
     ('HAVE_RL_APPEND_HISTORY', None),
     ('HAVE_RL_CALLBACK', None),
     ('HAVE_RL_CATCH_SIGNAL', None),
+    ('HAVE_RL_COMPDISP_FUNC_T', None),
     ('HAVE_RL_COMPLETION_APPEND_CHARACTER', None),
     ('HAVE_RL_COMPLETION_DISPLAY_MATCHES_HOOK', None),
     ('HAVE_RL_COMPLETION_MATCHES', None),
     ('HAVE_RL_COMPLETION_SUPPRESS_APPEND', None),
     ('HAVE_RL_PRE_INPUT_HOOK', None),
     ('HAVE_RL_RESIZE_TERMINAL', None),
+    # Ensure that the local checkout of readline includes its own headers
+    ('READLINE_LIBRARY', None),
 ]
 
 
@@ -115,6 +118,7 @@ setup(
     version=VERSION,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
+    long_description_content_type="text/x-rst",
     classifiers=CLASSIFIERS,
     maintainer="Ludwig Schwardt, Sridhar Ratnakumar",
     maintainer_email="ludwig.schwardt@gmail.com, srid@srid.ca",
@@ -125,7 +129,6 @@ setup(
     ext_modules=[
         Extension(name="gnureadline",
                   sources=[source],
-                  include_dirs=['.', os.path.dirname(source)],
                   define_macros=DEFINE_MACROS,
                   extra_objects=['readline/libreadline.a', 'readline/libhistory.a'],
                   libraries=['ncurses']

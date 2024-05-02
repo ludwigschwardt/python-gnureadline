@@ -5,45 +5,42 @@ Stand-alone GNU readline module
    :alt: GitHub Workflow Status
    :target: https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/test.yaml
 
-First... STOP
--------------
+Do I need this package?
+-----------------------
 
-Consider this: do you really need this package in 2022? You typically don't if
+Do the following quick check::
 
-- you use the Python provided by a standard Linux distribution like Ubuntu,
-  Debian, CentOS, etc. *(It already uses the proper readline.)*
-- you run **Windows**
-  *(It won't work! Try* `pyreadline`_ or `prompt_toolkit`_ *instead.)*
-- you use the Python provided by **Homebrew** or Fink on macOS
-  *(It has real readline already!)*
-- you want it for `IPython`_
-  *(It switched to* `prompt_toolkit`_ *in version 5.0.)*
-- you use a Python distribution like Anaconda or Enthought / Canopy
-  *(Again, real readline.)*
+  python -c "import readline; print(readline.__doc__)"
 
-You might need it if
+If the output is::
 
-- you use Python provided by MacPorts or the system on macOS
-  *(Python compiled against libedit.)*
-- you use a Python distribution like ActivePython on Linux or macOS
-  *(This used to ship without readline.)*
-- you want to get the latest bug fixes and features in either the readline
-  library or its Python module *(Typically when stuck on older systems.)*
+  Importing this module enables command line editing using GNU readline.
+
+then you already have GNU Readline and you probably don't need this package
+(unless you know what you are doing!). However, if the output is::
+
+  Importing this module enables command line editing using libedit readline.
+
+then you've come to the right place.
+
 
 Still interested?
 -----------------
 
-Some platforms, such as macOS, do not ship with `GNU readline`_ installed.
-The readline extension module in the standard library of Mac "system" Python
-uses NetBSD's `editline`_ (libedit) library instead, which is a readline
-replacement with a less restrictive software license.
+Some Posix platforms such as macOS do not ship with `GNU Readline`_ installed.
+Readline is licensed under the GPL, which makes it hard to distribute with
+proprietary software. A popular alternative is NetBSD's `Editline`_ (libedit)
+library which has a less restrictive BSD license. If you install Python on
+macOS via a popular open-source package manager such as Homebrew or MacPorts,
+you'll get a readline extension module that calls libedit internally (even
+though it's confusingly still called "readline"!).
 
-As the alternatives to GNU readline do not have fully equivalent functionality,
-it is useful to add proper readline support to these platforms. This module
-achieves this by bundling the standard Python readline module with the GNU
-readline source code, which is compiled and statically linked to it. The end
-result is a package which is simple to install and requires no extra shared
-libraries.
+While a lot of effort has been expended to make GNU Readline and Editline
+interchangeable within Python, they are not fully equivalent. If you want
+proper Readline support, this module provides it by bundling the standard
+Python readline module with the GNU Readline source code, which is compiled
+and statically linked to it. The end result is a package which is simple to
+install and requires no extra shared libraries.
 
 The module is called *gnureadline* so as not to clash with the readline module
 in the standard library. This keeps polite installers such as `pip`_ happy and
@@ -67,23 +64,23 @@ deprecated for a while and is about to be dropped from setuptools. Proceed at
 your own risk!**
 
 The module can be used with both Python 2.x and 3.x, and has been tested with
-Python versions 2.6, 2.7, and 3.2 to 3.10. The first three numbers of the module
-version reflect the version of the underlying GNU readline library (major,
+Python versions 2.6, 2.7, and 3.2 to 3.12. The first three numbers of the module
+version reflect the version of the underlying GNU Readline library (major,
 minor and patch level), while any additional fourth number distinguishes
-different module updates based on the same readline library.
+different module updates based on the same Readline library.
 
 This module is usually unnecessary on Linux and other Unix systems with default
 readline support. An exception is if you have a Python distribution that does
-not include GNU readline due to licensing restrictions (such as ActiveState's
+not include GNU Readline due to licensing restrictions (such as ActiveState's
 ActivePython in the past). If you are using Windows, which also ships without
-GNU readline, you might want to consider using the `pyreadline`_ module instead,
+GNU Readline, you might want to consider using the `pyreadline`_ module instead,
 which is a readline replacement written in pure Python that interacts with the
 Windows clipboard.
 
 The latest development version is available from the `GitHub repository`_.
 
-.. _GNU readline: http://www.gnu.org/software/readline/
-.. _editline: http://www.thrysoee.dk/editline/
+.. _GNU Readline: http://www.gnu.org/software/readline/
+.. _Editline: http://www.thrysoee.dk/editline/
 .. _pip: http://www.pip-installer.org/
 .. _IPython: http://ipython.org/
 .. _prompt_toolkit: http://python-prompt-toolkit.readthedocs.io/en/stable/
