@@ -8,7 +8,7 @@ import subprocess
 from setuptools import setup, Extension
 
 if sys.platform == 'win32':
-    sys.exit('Error: this module is not meant to work on Windows (try pyreadline instead)')
+    sys.exit('Error: this module is not meant to work on Windows (try pyreadline3 instead)')
 elif sys.platform == 'cygwin':
     sys.exit('Error: this module is not needed for Cygwin (and probably does not compile anyway)')
 
@@ -124,7 +124,7 @@ setup(
     maintainer_email="ludwig.schwardt@gmail.com, srid@srid.ca",
     url="http://github.com/ludwigschwardt/python-gnureadline",
     include_package_data=True,
-    py_modules=['readline'],
+    py_modules=['readline', 'override_readline'],
     cmdclass={'build_ext': build_ext_subclass},
     ext_modules=[
         Extension(name="gnureadline",
