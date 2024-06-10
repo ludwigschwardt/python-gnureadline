@@ -15,21 +15,19 @@ Release HOWTO
 
    https://github.com/ludwigschwardt/python-gnureadline/actions/workflows/wheels.yaml
 
-4. Download the "sdist" and "wheels" artifacts of the "Build wheels" workflow
-   and unzip::
+4. Download the "combined" artifact of the "Build wheels" workflow and unzip::
 
-   $ mkdir wheelhouse
-   $ unzip sdist.zip -d wheelhouse
-   $ unzip wheels.zip -d wheelhouse
+   $ mkdir gnureadline-uploads && cd gnureadline-uploads
+   $ unzip ../combined.zip
 
 5. Securely upload artifacts to the test PyPI and check that all is well::
 
-   $ twine check wheelhouse/*.tar.gz
-   $ twine upload -r testpypi wheelhouse/*.tar.gz
+   $ twine check dist/*.tar.gz
+   $ twine upload -r testpypi dist/*.tar.gz
 
 6. Now upload artifacts to the real PyPI (release!)::
 
-   $ twine upload wheelhouse/*.tar.gz
+   $ twine upload dist/*.tar.gz
    $ twine upload wheelhouse/*.whl
 
 7. Tag the git revision that was released::
