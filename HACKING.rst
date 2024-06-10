@@ -24,14 +24,13 @@ Release HOWTO
 
 5. Securely upload artifacts to the test PyPI and check that all is well::
 
-   $ export IDENTITY=<identity>
-   $ twine upload -r testpypi wheelhouse/*.tar.gz --sign -i $IDENTITY
-   $ twine upload -r testpypi wheelhouse/*.whl --sign -i $IDENTITY
+   $ twine check wheelhouse/*.tar.gz
+   $ twine upload -r testpypi wheelhouse/*.tar.gz
 
 6. Now upload artifacts to the real PyPI (release!)::
 
-   $ twine upload wheelhouse/*.tar.gz --sign -i $IDENTITY
-   $ twine upload wheelhouse/*.whl --sign -i $IDENTITY
+   $ twine upload wheelhouse/*.tar.gz
+   $ twine upload wheelhouse/*.whl
 
 7. Tag the git revision that was released::
 
