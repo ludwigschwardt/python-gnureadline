@@ -31,10 +31,11 @@ jobs:
         with:
           platforms: arm64
         if: matrix.arch != 'x86_64'
-      - uses: pypa/cibuildwheel@v2.17.0
+      - uses: pypa/cibuildwheel@v2.18.1
         env:
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_BUILD: ${{ matrix.python }}-manylinux*
+          CIBW_TEST_REQUIRES: ""
           CIBW_TEST_COMMAND: python -c "import gnureadline"
       - uses: actions/upload-artifact@v4
         with:
@@ -60,9 +61,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: pypa/cibuildwheel@v2.17.0
+      - uses: pypa/cibuildwheel@v2.18.1
         env:
           CIBW_BUILD: ${{ matrix.python }}-macos*
+          CIBW_TEST_REQUIRES: ""
           CIBW_TEST_COMMAND: python -c "import gnureadline"
       - uses: actions/upload-artifact@v4
         with:
