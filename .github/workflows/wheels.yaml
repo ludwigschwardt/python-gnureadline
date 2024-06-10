@@ -35,6 +35,7 @@ jobs:
         env:
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_BUILD: ${{ matrix.python }}-manylinux*
+          CIBW_TEST_COMMAND: python -c "import gnureadline"
       - uses: actions/upload-artifact@v4
         with:
           name: wheel_linux-${{ matrix.arch }}-${{ matrix.python }}
@@ -62,6 +63,7 @@ jobs:
       - uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_BUILD: ${{ matrix.python }}-macos*
+          CIBW_TEST_COMMAND: python -c "import gnureadline"
       - uses: actions/upload-artifact@v4
         with:
           name: wheel_${{ matrix.os }}-${{ matrix.python }}
