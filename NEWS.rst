@@ -1,6 +1,16 @@
 History
 =======
 
+8.2.10 (2024-06-10)
+-------------------
+* #61, #62, #65, #69: Supports Python 3.11 and 3.12, but not yet 3.13
+* New readline override mechanism via site customization
+* Overhaul documentation and tests to reflect this
+* Upgrade GitHub Actions to use macos-13 and macos-14 native builds
+* Uses Python 3.12.1 readline.c (commit 7225a01, 2023-11-28), also OK for 3.11
+* Uses Python 3.10.9 readline.c (commit 5074c35, 2022-10-27), also OK for 3.9
+* Updated to build against readline 8.2 (patch-level 10)
+
 8.1.2 (2022-06-14)
 ------------------
 * #57, #58: Now supports arm64 architecture (Apple M1, Raspberry Pi)
