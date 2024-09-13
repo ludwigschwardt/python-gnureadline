@@ -71,7 +71,8 @@ def check_module(module_name):
         print("Module {name}: not found".format(name=module_name))
         return None
     style = "libedit" if "libedit" in module.__doc__ else "GNU readline"
-    kwargs = dict(name=module_name, style=style, path=module.__file__)
+    path = getattr(module, "__file__", "(built-in)")
+    kwargs = dict(name=module_name, style=style, path=path)
     print("Module {name}: based on {style}, {path}".format(**kwargs))
     return module
 
