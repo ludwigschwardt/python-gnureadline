@@ -70,10 +70,15 @@ def check_module(module_name):
     except ImportError:
         print("Module {name}: not found".format(name=module_name))
         return None
-    style = "libedit" if "libedit" in module.__doc__ else "GNU readline"
+    try:
+        # Python 3.13 introduced a backend attribute on readline module
+        is_libedit = module.backend == "editline"
+    except AttributeError:
+        is_libedit = "libedit" in module.__doc__
+    backend = "libedit" if is_libedit else "GNU readline"
     path = getattr(module, "__file__", "(built-in)")
-    kwargs = dict(name=module_name, style=style, path=path)
-    print("Module {name}: based on {style}, {path}".format(**kwargs))
+    kwargs = dict(name=module_name, backend=backend, path=path)
+    print("Module {name}: based on {backend}, {path}".format(**kwargs))
     return module
 
 
