@@ -10,7 +10,11 @@
 
 /* Standard definitions */
 #include "Python.h"
+/* Don't include internal Python header file - see workaround below
 #include "pycore_pylifecycle.h"   // _Py_SetLocaleFromEnv()
+*/
+/* Include the only bit needed from internal pycore_pylifecycle.h header */
+PyAPI_FUNC(char*) _Py_SetLocaleFromEnv(int category);
 
 #include <errno.h>                // errno
 #include <signal.h>               // SIGWINCH

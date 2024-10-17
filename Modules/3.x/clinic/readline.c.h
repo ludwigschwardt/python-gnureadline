@@ -2,7 +2,22 @@
 preserve
 [clinic start generated code]*/
 
-#include "pycore_modsupport.h"    // _PyArg_CheckPositional()
+/* Don't include internal Python header file - see workaround below
+#include "pycore_modsupport.h"    // _PyArg_CheckPositional(), _PyArg_BadArgument()
+*/
+/* Include only necessary bits of internal pycore_modsupport.h header */
+PyAPI_FUNC(int) _PyArg_CheckPositional(const char *, Py_ssize_t,
+                                       Py_ssize_t, Py_ssize_t);
+#define _Py_ANY_VARARGS(n) ((n) == PY_SSIZE_T_MAX)
+#define _PyArg_CheckPositional(funcname, nargs, min, max) \
+    ((!_Py_ANY_VARARGS(max) && (min) <= (nargs) && (nargs) <= (max)) \
+     || _PyArg_CheckPositional((funcname), (nargs), (min), (max)))
+PyAPI_FUNC(void) _PyArg_BadArgument(
+    const char *fname,
+    const char *displayname,
+    const char *expected,
+    PyObject *arg);
+/* end of includes from pycore_modsupport.h */
 
 PyDoc_STRVAR(readline_parse_and_bind__doc__,
 "parse_and_bind($module, string, /)\n"
