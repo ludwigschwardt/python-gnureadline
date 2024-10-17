@@ -105,7 +105,7 @@ Versions
 --------
 
 The module can be used with both Python 2.x and 3.x, and has been tested with
-Python versions 2.6, 2.7, and 3.2 to 3.12. The first three numbers of the
+Python versions 2.6, 2.7, and 3.2 to 3.13. The first three numbers of the
 module version reflect the version of the underlying GNU Readline library
 (major, minor and patch level), while any additional fourth number
 distinguishes different module updates based on the same Readline library.
