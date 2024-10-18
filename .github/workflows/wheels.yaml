@@ -31,12 +31,12 @@ jobs:
         with:
           platforms: arm64
         if: matrix.arch != 'x86_64'
-      - uses: pypa/cibuildwheel@v2.18.1
+      - uses: pypa/cibuildwheel@v2.21.3
         env:
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_BUILD: ${{ matrix.python }}-manylinux*
-          # Enable free-threaded support for Python 3.13+
-          CIBW_FREE_THREADED_SUPPORT: 1
+          # Build free-threaded wheels once it is more widely supported
+          # CIBW_FREE_THREADED_SUPPORT: True
           CIBW_TEST_REQUIRES: ""
           CIBW_TEST_COMMAND: python -c "import gnureadline"
       - uses: actions/upload-artifact@v4
@@ -66,8 +66,8 @@ jobs:
       - uses: pypa/cibuildwheel@v2.21.3
         env:
           CIBW_BUILD: ${{ matrix.python }}-macos*
-          # Enable free-threaded support for Python 3.13+
-          CIBW_FREE_THREADED_SUPPORT: 1
+          # Build free-threaded wheels once it is more widely supported
+          # CIBW_FREE_THREADED_SUPPORT: True
           CIBW_TEST_REQUIRES: ""
           CIBW_TEST_COMMAND: python -c "import gnureadline"
       - uses: actions/upload-artifact@v4
