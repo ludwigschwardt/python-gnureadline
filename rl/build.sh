@@ -58,6 +58,9 @@ patch -p0 < ../readline82-007
 patch -p0 < ../readline82-008
 patch -p0 < ../readline82-009
 patch -p0 < ../readline82-010
+patch -p0 < ../readline82-011
+patch -p0 < ../readline82-012
+patch -p0 < ../readline82-013
 # Force compiler to CC/cc in the case of Darwin
 ./configure CPPFLAGS='-DNEED_EXTERN_PC -fPIC' $cc_override
 # Only the static libraries are required
