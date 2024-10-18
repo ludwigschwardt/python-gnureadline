@@ -3,12 +3,6 @@ from os import path
 
 import gnureadline
 
-# Since the tests are non-interactive we don't expect readline to be imported.
-# Unfortunately it manages to sneak in on Python 3.13.0 via pytest and pdb (see
-# python/cpython#112948 and pytest/src/_pytest/debugging.py). Enforce its absence.
-if 'readline' in sys.modules:
-    del sys.modules['readline']
-
 
 def import_alternative_readline_module():
     """This forcibly imports our alternative readline.py module over the standard one."""
@@ -24,6 +18,12 @@ def import_alternative_readline_module():
     readline.so was not installed properly into site-packages.
     'import readline' imports %s
     sys.path:\n%s'''
+    # Since the tests are non-interactive we don't expect readline to be imported
+    # if we are not overriding it. Unfortunately it manages to sneak in on Python 3.13.0
+    # via pytest and pdb (see python/cpython#112948 and pytest/src/_pytest/debugging.py).
+    # Enforce its absence.
+    if 'readline' in sys.modules:
+        del sys.modules['readline']
     # Put site-packages in front of sys.path so we don't end up importing the global
     # readline.so
     save_sys_path = list(sys.path)
