@@ -1,6 +1,13 @@
 History
 =======
 
+8.2.13 (2024-10-18)
+-------------------
+* #70, #76: Supports Python 3.13 (including free-threaded version)
+* #74, #75: Fix readline override to work with python-build-standalone dist
+* Uses Python 3.13.0 readline.c (commit 417dd3a, 2024-05-06)
+* Updated to build against readline 8.2 (patch-level 13)
+
 8.2.10 (2024-06-10)
 -------------------
 * #61, #62, #65, #69: Supports Python 3.11 and 3.12, but not yet 3.13

@@ -2,22 +2,11 @@
 preserve
 [clinic start generated code]*/
 
-/* Don't include internal Python header file - see workaround below
-#include "pycore_modsupport.h"    // _PyArg_CheckPositional(), _PyArg_BadArgument()
-*/
-/* Include only necessary bits of internal pycore_modsupport.h header */
-PyAPI_FUNC(int) _PyArg_CheckPositional(const char *, Py_ssize_t,
-                                       Py_ssize_t, Py_ssize_t);
-#define _Py_ANY_VARARGS(n) ((n) == PY_SSIZE_T_MAX)
-#define _PyArg_CheckPositional(funcname, nargs, min, max) \
-    ((!_Py_ANY_VARARGS(max) && (min) <= (nargs) && (nargs) <= (max)) \
-     || _PyArg_CheckPositional((funcname), (nargs), (min), (max)))
-PyAPI_FUNC(void) _PyArg_BadArgument(
-    const char *fname,
-    const char *displayname,
-    const char *expected,
-    PyObject *arg);
-/* end of includes from pycore_modsupport.h */
+#if defined(Py_BUILD_CORE) && !defined(Py_BUILD_CORE_MODULE)
+#  include "pycore_gc.h"            // PyGC_Head
+#  include "pycore_runtime.h"       // _Py_ID()
+#endif
+
 
 PyDoc_STRVAR(readline_parse_and_bind__doc__,
 "parse_and_bind($module, string, /)\n"
@@ -157,7 +146,7 @@ readline_append_history_file(PyObject *module, PyObject *const *args, Py_ssize_t
     if (!_PyArg_CheckPositional("append_history_file", nargs, 1, 2)) {
         goto exit;
     }
-    nelements = PyLong_AsInt(args[0]);
+    nelements = _PyLong_AsInt(args[0]);
     if (nelements == -1 && PyErr_Occurred()) {
         goto exit;
     }
@@ -194,7 +183,7 @@ readline_set_history_length(PyObject *module, PyObject *arg)
     PyObject *return_value = NULL;
     int length;
 
-    length = PyLong_AsInt(arg);
+    length = _PyLong_AsInt(arg);
     if (length == -1 && PyErr_Occurred()) {
         goto exit;
     }
@@ -415,7 +404,7 @@ readline_remove_history_item(PyObject *module, PyObject *arg)
     PyObject *return_value = NULL;
     int entry_number;
 
-    entry_number = PyLong_AsInt(arg);
+    entry_number = _PyLong_AsInt(arg);
     if (entry_number == -1 && PyErr_Occurred()) {
         goto exit;
     }
@@ -450,12 +439,15 @@ readline_replace_history_item(PyObject *module, PyObject *const *args, Py_ssize_
     if (!_PyArg_CheckPositional("replace_history_item", nargs, 2, 2)) {
         goto exit;
     }
-    entry_number = PyLong_AsInt(args[0]);
+    entry_number = _PyLong_AsInt(args[0]);
     if (entry_number == -1 && PyErr_Occurred()) {
         goto exit;
     }
     if (!PyUnicode_Check(args[1])) {
         _PyArg_BadArgument("replace_history_item", "argument 2", "str", args[1]);
+        goto exit;
+    }
+    if (PyUnicode_READY(args[1]) == -1) {
         goto exit;
     }
     line = args[1];
@@ -593,7 +585,7 @@ readline_get_history_item(PyObject *module, PyObject *arg)
     PyObject *return_value = NULL;
     int idx;
 
-    idx = PyLong_AsInt(arg);
+    idx = _PyLong_AsInt(arg);
     if (idx == -1 && PyErr_Occurred()) {
         goto exit;
     }
@@ -699,4 +691,4 @@ readline_redisplay(PyObject *module, PyObject *Py_UNUSED(ignored))
 #ifndef READLINE_CLEAR_HISTORY_METHODDEF
     #define READLINE_CLEAR_HISTORY_METHODDEF
 #endif /* !defined(READLINE_CLEAR_HISTORY_METHODDEF) */
-/*[clinic end generated code: output=358ab465285c7949 input=a9049054013a1b77]*/
+/*[clinic end generated code: output=9097fcb749c19e27 input=a9049054013a1b77]*/
