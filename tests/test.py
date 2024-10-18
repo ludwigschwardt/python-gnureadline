@@ -3,6 +3,12 @@ from os import path
 
 import gnureadline
 
+# Since the tests are non-interactive we don't expect readline to be imported.
+# Unfortunately it manages to sneak in on Python 3.13.0 via pytest and pdb (see
+# python/cpython#112948 and pytest/src/_pytest/debugging.py). Enforce its absence.
+if 'readline' in sys.modules:
+    del sys.modules['readline']
+
 
 def import_alternative_readline_module():
     """This forcibly imports our alternative readline.py module over the standard one."""
