@@ -116,6 +116,12 @@ If you are using Windows, which also ships without GNU Readline, you might
 want to consider using the `pyreadline3`_ module instead, which is a readline
 replacement written in pure Python that interacts with the Windows clipboard.
 
+**Please note that Python 3.13 introduced a new interactive interpreter.**
+It reimplements some of the GNU Readline functionality in Python and thereby
+bypasses it (for example when entering Ctrl-R to search the command history).
+Its behaviour may be subtly different though. If you want to revert to the
+old interpreter, set the environment variable `PYTHON_BASIC_REPL=1`.
+
 .. _GNU Readline: http://www.gnu.org/software/readline/
 .. _Editline: http://www.thrysoee.dk/editline/
 .. _site: https://docs.python.org/library/site.html
