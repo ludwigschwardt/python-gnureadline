@@ -16,7 +16,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(here, 'README.rst')).read()
 NEWS = open(os.path.join(here, 'NEWS.rst')).read()
 
-VERSION = '8.2.13'
+VERSION = '8.3.3'
 DESCRIPTION = 'The standard Python readline extension statically linked against the GNU readline library.'
 LONG_DESCRIPTION = README + '\n\n' + NEWS
 CLASSIFIERS = [
@@ -24,7 +24,6 @@ CLASSIFIERS = [
     'Environment :: Console',
     'Intended Audience :: Developers',
     'Intended Audience :: End Users/Desktop',
-    'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
     'Operating System :: MacOS :: MacOS X',
     'Operating System :: POSIX',
     'Programming Language :: C',
@@ -119,10 +118,11 @@ setup(
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/x-rst",
-    classifiers=CLASSIFIERS,
     maintainer="Ludwig Schwardt, Sridhar Ratnakumar",
     maintainer_email="ludwig.schwardt@gmail.com, srid@srid.ca",
     url="http://github.com/ludwigschwardt/python-gnureadline",
+    classifiers=CLASSIFIERS,
+    license="GPL-3.0-or-later",
     include_package_data=True,
     py_modules=['readline', 'override_readline'],
     cmdclass={'build_ext': build_ext_subclass},

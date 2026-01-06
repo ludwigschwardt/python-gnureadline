@@ -1,6 +1,12 @@
 History
 =======
 
+8.3.3 (2026-01-06)
+------------------
+* #80, #81: Supports Python 3.14 and early 3.15 (also free-threaded versions)
+* Uses Python 3.15.0a3 readline.c (commit 4238a97, 2025-12-05)
+* Updated to build against readline 8.3 (patch-level 3)
+
 8.2.13 (2024-10-18)
 -------------------
 * #70, #76: Supports Python 3.13 (including free-threaded version)
