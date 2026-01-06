@@ -13,21 +13,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, macos-13, macos-14]
-        python: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+        os: [ubuntu-24.04, macos-15-intel, macos-26]
+        python: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
         exclude:
-          # There is something fishy about this combo (broken standard readline)
-          - os: macos-13
-            python: "3.7"
-          # setup-python only gained arm64 from version 3.10.11 onwards
-          - os: macos-14
-            python: "3.6"
-          - os: macos-14
-            python: "3.7"
-          - os: macos-14
-            python: "3.8"
-          - os: macos-14
+          # macOS arm64 images only start at Python 3.11
+          - os: macos-26
             python: "3.9"
+          - os: macos-26
+            python: "3.10"
     steps:
       - uses: actions/checkout@v4
 
