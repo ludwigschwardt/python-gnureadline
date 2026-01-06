@@ -38,27 +38,3 @@ jobs:
         with:
           name: cibw-wheels-${{ matrix.os }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
-
-  combine:
-    needs: [build_sdist, build_wheels]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - name: Create paths
-        run: mkdir -p dist wheelhouse
-      - uses: actions/download-artifact@v6
-        with:
-          pattern: cibw-wheels-*
-          path: ./wheelhouse/
-          merge-multiple: true
-      - uses: actions/download-artifact@v6
-        with:
-          name: sdist
-          path: ./dist/
-          merge-multiple: true
-      - uses: actions/upload-artifact@v6
-        with:
-          name: combined
-          path: |
-            ./dist/
-            ./wheelhouse/
