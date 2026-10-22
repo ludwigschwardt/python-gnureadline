@@ -51,6 +51,9 @@ cd readline-lib
 patch -p0 < ../readline83-001
 patch -p0 < ../readline83-002
 patch -p0 < ../readline83-003
+patch -p0 < ../readline83-004
+patch -p0 < ../readline83-005
+patch -p0 < ../readline83-006
 # Force compiler to CC/cc in the case of Darwin
 ./configure CPPFLAGS='-DNEED_EXTERN_PC -fPIC' $cc_override
 # Only the static libraries are required
