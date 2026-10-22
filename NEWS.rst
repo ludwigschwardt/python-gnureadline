@@ -1,6 +1,11 @@
 History
 =======
 
+8.3.6 (Unreleased)
+------------------
+* #82: Build wheels for Python 3.15 (including free-threaded versions)
+* Updated to build against readline 8.3 (patch-level 6)
+
 8.3.3 (2026-01-06)
 ------------------
 * #80, #81: Supports Python 3.14 and early 3.15 (also free-threaded versions)
